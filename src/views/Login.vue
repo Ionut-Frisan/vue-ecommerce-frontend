@@ -99,11 +99,11 @@ const login = async () => {
     await axios.get("/auth/me", {
       headers: {
         'Authorization': `Bearer ${token}`
-      },
+      }
     }).then((res) => {
       if(res.data.success){
         auth.setUserRole(res.data.data);
-        router.push({name: 'Dashboard', path:'/admin-panel'})
+        router.push({path:'/'})
       }
     }).catch((err) => console.log(err));
   }
@@ -147,6 +147,7 @@ const login = async () => {
   border: 1px solid #b4b8c0;
   width: 500px;
   border-radius: 6px;
+  background-color: #fff;
 }
 .input-credentials {
   width: 300px !important;

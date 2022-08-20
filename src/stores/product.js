@@ -45,7 +45,6 @@ export const useProductStore = defineStore('products', {
     },
     async fetchProducts(page = 1, query='') {
       const queryParams = this.getQueryParams(page, query).asString;
-      this.isLoading = true;
       await axios
         .get(`/products${queryParams}`)
         .then((res) => {
@@ -55,8 +54,6 @@ export const useProductStore = defineStore('products', {
         .catch((err) => {
           console.log(err);
         });
-      this.isLoading = false;
-
     }
   }
 })

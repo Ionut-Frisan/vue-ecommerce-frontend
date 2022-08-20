@@ -14,16 +14,16 @@ import ToastService from "primevue/toastservice";
 import ConfirmationService from 'primevue/confirmationservice';
 import Tooltip from 'primevue/tooltip';
 
+import { createPinia } from 'pinia';
 import router from "./router/index";
 import axios from "axios";
-import { createPinia } from 'pinia';
 
 axios.defaults.baseURL = "http://127.0.0.1:5000/api/v1";
 
 const app = createApp(App);
 const pinia = createPinia();
 
-app.use(PrimeVue).use(router, axios).use(ToastService).use(ConfirmationService).use(pinia);
+app.use(PrimeVue).use(pinia).use(router, axios).use(ToastService).use(ConfirmationService);
 app.directive("badge", BadgeDirective);
 
 app.component("InputText", InputText);

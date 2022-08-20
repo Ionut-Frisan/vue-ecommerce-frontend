@@ -1,15 +1,21 @@
 <template>
   <div class="card">
-    <Button icon="pi pi-heart"
-            @mouseenter="isFavoritesButtonHovered = true"
-            @mouseleave="isFavoritesButtonHovered = false"
-            :class="favoritesButtonClasses"/>
-    <img
-        crossorigin="anonymous"
-        class="card-image"
-        :src="imageUrl"
-    >
-    <span class="discount" v-if="hasDiscount"> -{{ product.discount }}%</span>
+    <div class="card-top">
+      <img
+          crossorigin="anonymous"
+          class="card-image"
+          :src="imageUrl"
+      >
+      <Button icon="pi pi-heart"
+              @mouseenter="isFavoritesButtonHovered = true"
+              @mouseleave="isFavoritesButtonHovered = false"
+              :class="favoritesButtonClasses"/>
+      <div class="badges-offer-right">
+        <span class="badge discount-badge" v-if="hasDiscount">-{{ product.discount }}%</span>
+      </div>
+      <div class="badges-text-right">
+      </div>
+    </div>
     <div class="card-body">
       <span class="product-title" v-tooltip.bottom="product.name">{{ computedTitle }}</span>
       <div class="product-card-footer">
@@ -22,7 +28,7 @@
             {{ priceWholePart }}<sup class="price-float-price">{{ priceFloatPart }}</sup> GBP
           </span>
           <Button icon="pi pi-shopping-cart" class="p-button-outlined" @click="addToCart"/>
-          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -73,6 +79,10 @@ const computedTitle = computed(() => {
 
 const computedPrice = computed(() => {
   return props.product.price * (1 - props.product.discount / 100);
+})
+
+const computedBadges = (() => {
+  
 })
 
 const priceWholePart = computed(() => {
@@ -126,15 +136,14 @@ const addToCart = () => {
   width: 100%;
   cursor: pointer;
   user-select: none;
-  position: relative;
   overflow: hidden;
   background-color: #fff;
   padding: 10px;
   border-radius: 5px;
 }
 
-.card:hover{
-  box-shadow: 1px -1px 5px -2px rgba(0,0,0,0.5);
+.card:hover {
+  box-shadow: 1px -1px 5px -2px rgba(0, 0, 0, 0.5);
 }
 
 .card-image {
@@ -145,21 +154,67 @@ const addToCart = () => {
   width: 100%;
 }
 
-.product-title{
+.card-top{
+  position: relative;
+}
+
+.product-title {
   height: 2em;
 }
 
-.discount {
+.badges-offer-right {
   position: absolute;
-  transform: rotate(45deg);
-  z-index: 10;
-  right: -30px;
+  z-index: 5;
+  right: -10px;
   top: 25px;
-  width: 150px;
+  width: 50px;
   text-align: center;
-  background-color: red;
   overflow: hidden;
   font-weight: 600;
+  font-size: 14px;
+  padding: 0;
+  border-radius: 5px 0 0 5px;
+}
+
+.badges-text-right {
+  position: absolute;
+  z-index: 5;
+  right: -10px;
+  bottom: 10px;
+  width: 80px;
+  text-align: center;
+  overflow: hidden;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 0;
+  border-radius: 5px 0 0 5px;
+}
+
+.badge {
+  display: block;
+  background-color: red;
+  padding: 2px 0;
+}
+
+.text-badge {
+  font-size: 12px;
+}
+
+.discount-badge {
+  background: rgb(158, 16, 16);
+  background: linear-gradient(90deg, rgba(158, 16, 16, 1) 0%, rgba(195, 10, 10, 1) 47%, rgba(255, 0, 0, 1) 100%);
+  color: #fff;
+}
+
+.out-of-stock-badge {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.8855917366946778) 0%, rgba(55, 55, 65, 1) 47%, rgba(1, 1, 1, 0.7875525210084033) 100%);
+  color: #fff;
+}
+
+.most-favourites-badge {
+  background: #00bfff;
+  color: #fff;
 }
 
 .card-body {
@@ -194,7 +249,7 @@ const addToCart = () => {
   padding: 0 5px 5px 5px;
 }
 
-.p-toast-top-right{
+.p-toast-top-right {
   z-index: 40;
   top: 65px;
 }

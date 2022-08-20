@@ -39,6 +39,10 @@ export const useAuthStore = defineStore('auth', {
       const userRoleObj = {role: user.role};
       localStorage.setItem('user', JSON.stringify(userRoleObj));
     },
+    async logOut(){
+      this.removeAuthToken();
+      this.userRole = 'visitor';
+    },
     initFromLocal(){
       if(localStorage.getItem('token')){
         this.setAuthToken(localStorage.getItem('token'));
