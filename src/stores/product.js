@@ -54,6 +54,16 @@ export const useProductStore = defineStore('products', {
         .catch((err) => {
           console.log(err);
         });
+    },
+    async fetchSingleProduct(slug){
+      let product = {}
+      await axios
+        .get(`/products/${slug}`)
+        .then((res) => {
+          product = res.data.data[0];
+        })
+        .catch((err) => console.log(err))
+      return product
     }
   }
 })

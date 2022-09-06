@@ -53,7 +53,6 @@ import InputNumber from 'primevue/inputnumber';
 // eslint-disable-next-line import/namespace
 import {useCartStore} from '../stores/cart';
 
-
 const props = defineProps({
   item: {
     required: true,

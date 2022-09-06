@@ -2,13 +2,24 @@ import { ref, computed } from 'vue';
 
 export function useProduct(product) {
   const prod = ref({...product});
-
+  console.log(product);
   const getImageUrl = () => {
     if (Array.isArray(prod.value.images)) {
       if (prod.value.images.length)
         return `http://localhost:5000/uploads/${prod.value.images[0]}`
       return `http://localhost:5000/uploads/no-photo.jpeg`
     }
+    return `http://localhost:5000/uploads/${prod.value.images}`
+  }
+
+  const getAllImagesUrl = () => {
+    if(Array.isArray(prod.value.images)){
+      if (prod.value.images.length){
+        return prod.value.images.map((img) => `http://localhost:5000/uploads/${img}`)
+      }
+      return [`http://localhost:5000/uploads/no-photo.jpeg`]
+    }
+    console.log(prod.value);
     return `http://localhost:5000/uploads/${prod.value.images}`
   }
 
@@ -34,5 +45,5 @@ export function useProduct(product) {
     return prod.value.name.charAt(0).toUpperCase() + prod.value.name.slice(1);
   })
 
-  return {getImageUrl, priceFloatPart, priceWholePart, hasDiscount, computedTitle};
+  return {getImageUrl, getAllImagesUrl, priceFloatPart, priceWholePart, hasDiscount, computedTitle};
 }

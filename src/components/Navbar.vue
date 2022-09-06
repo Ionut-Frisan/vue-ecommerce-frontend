@@ -5,7 +5,10 @@
         Whynot
       </router-link>
     </p>
-    <form @submit="onSearch">
+    <form
+      :class="[{ 'is-not-open': !showMobile }, 'search-input-wrapper']"
+      @submit="onSearch"
+    >
       <span class="p-input-icon-right">
         <i class="pi pi-search" />
         <InputText
@@ -194,7 +197,7 @@ const onSearch = (e) => {
 
   .nav-items {
     position: absolute;
-    top: 60px;
+    top: 97px;
     left: 0;
     width: 100vw;
     display: flex;
@@ -212,6 +215,20 @@ const onSearch = (e) => {
 
   .search-input {
     width: 300px;
+  }
+
+  .search-input-wrapper{
+    position: absolute;
+    top: 59px;
+    left: 0;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    padding: 0;
+    margin: 0;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 </style>

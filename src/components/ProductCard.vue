@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-cloak="">
     <div class="card-top">
       <img
           crossorigin="anonymous"
