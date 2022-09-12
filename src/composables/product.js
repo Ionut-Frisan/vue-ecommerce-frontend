@@ -2,7 +2,6 @@ import { ref, computed } from 'vue';
 
 export function useProduct(product) {
   const prod = ref({...product});
-  console.log(product);
   const getImageUrl = () => {
     if (Array.isArray(prod.value.images)) {
       if (prod.value.images.length)
@@ -19,7 +18,6 @@ export function useProduct(product) {
       }
       return [`http://localhost:5000/uploads/no-photo.jpeg`]
     }
-    console.log(prod.value);
     return `http://localhost:5000/uploads/${prod.value.images}`
   }
 

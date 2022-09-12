@@ -4,11 +4,10 @@
       <Galleria
         :value="imagesUrls"
         :num-visible="5"
-        :responsive-options="responsiveOptions"
         :show-indicators="true"
         :show-thumbnails="false"
         :show-indicators-on-item="true"
-        container-style="width: 50%"
+        container-style="width: 50%;"
       >
         <template #item="slotProps">
           <img
@@ -20,7 +19,9 @@
         </template>
       </Galleria>
       <div class="title-and-stuff">
-        {{ product.name }}
+        <h3>{{ computedTitle }}</h3>
+        <span>{{priceWholePart}}<sup>{{priceFloatPart}}</sup> GBP</span>
+        <rating model-value="rating" :readonly="true"></rating>
       </div>
     </div>
   </div>
@@ -29,28 +30,14 @@
 import {computed, onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import {useProductStore} from "../stores/product.js";
-import {useProduct} from "../composables/product.js";
 import Galleria from 'primevue/galleria';
+import Rating from 'primevue/rating';
 
 const route = useRoute();
 const productStore = useProductStore();
 
 const product = ref({});
 
-const responsiveOptions = [
-  {
-    breakpoint: '1024px',
-    numVisible: 5
-  },
-  {
-    breakpoint: '768px',
-    numVisible: 3
-  },
-  {
-    breakpoint: '560px',
-    numVisible: 1
-  }
-]
 
 onMounted(async () => {
   const slug = route.params.slug;
@@ -67,6 +54,26 @@ const imagesUrls = computed(() => {
     return [{src: `http://localhost:5000/uploads/no-photo.jpeg`}]
   }
   return [{src: `http://localhost:5000/uploads/${product.value.images}`}]
+})
+
+const computedTitle = computed(() => product.value?.name?.toUpperCase() || '')
+
+const computedPrice = computed(() => {
+  return product.value.price * (1 - product.value.discount / 100);
+})
+
+const priceWholePart = computed(() => {
+  return Math.floor(computedPrice.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+})
+
+const priceFloatPart = computed(() => {
+  let value = computedPrice.value - parseInt((priceWholePart.value).replaceAll('.', ''));
+  value = Math.round(value * 100).toString();
+  return value.length === 2 ? value : value + '0'
+})
+
+const rating = computed(() => {
+  return Math.round(product?.averageRating || 0)
 })
 
 </script>
