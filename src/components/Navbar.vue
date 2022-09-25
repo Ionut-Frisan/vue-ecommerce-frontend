@@ -1,9 +1,7 @@
 <template>
   <nav class="navbar">
     <p class="navbar-branding">
-      <router-link to="/">
-        Whynot
-      </router-link>
+      <router-link to="/"> Whynot </router-link>
     </p>
     <form
       :class="[{ 'is-not-open': !showMobile }, 'search-input-wrapper']"
@@ -19,10 +17,7 @@
         />
       </span>
     </form>
-    <ul
-      class="nav-items"
-      :class="{ 'is-not-open': !showMobile }"
-    >
+    <ul class="nav-items" :class="{ 'is-not-open': !showMobile }">
       <li class="nav-item">
         <Button
           label="Cart"
@@ -53,23 +48,21 @@
         />
       </li>
     </ul>
-    <i
-      class="pi pi-bars hamburger"
-      @click="toggleMobile"
-    />
+    <i class="pi pi-bars hamburger" @click="toggleMobile" />
   </nav>
 </template>
 
 <script setup>
-import {computed, ref, watch} from "vue";
-import {useAuthStore} from "../stores/auth.js";
+import { computed, ref, watch } from "vue";
+import { useAuthStore } from "../stores/auth.js";
 
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import SplitButton from "primevue/splitbutton";
-import {useCartStore} from "../stores/cart.js";
+import { useCartStore } from "../stores/cart.js";
 import router from "../router/index.js";
-import {useProductStore} from "../stores/product.js";
+import { useProductStore } from "../stores/product.js";
+
 
 const auth = useAuthStore();
 const cart = useCartStore();
@@ -82,61 +75,60 @@ const toggleMobile = () => {
   showMobile.value = !showMobile.value;
 };
 
-const searchQuery = ref('');
+const searchQuery = ref("");
 
 const computedItems = computed(() => {
   let items = [
     {
       label: "Settings",
       icon: "pi pi-cog",
-      to: '/'
-    }
-  ]
-  if(auth.isAuthenticated && auth.isAdmin){
+      to: "/",
+    },
+  ];
+  if (auth.isAuthenticated && auth.isAdmin) {
     items.push({
-      label: 'Admin',
-      icon: 'pi pi-user-edit',
-      to: '/admin-panel'
-    })
+      label: "Admin",
+      icon: "pi pi-user-edit",
+      to: "/admin-panel",
+    });
   }
-  if(!auth.isAuthenticated){
+  if (!auth.isAuthenticated) {
     items.push({
       label: "Sign in",
       icon: "pi pi-sign-in",
-      to: "/login"
-    })
+      to: "/login",
+    });
     items.push({
       label: "Register",
       icon: "pi pi-sign-in",
-      to: "/sign-up"
-    })
-  }
-  else{
+      to: "/sign-up",
+    });
+  } else {
     items.push({
       label: "Sign out",
       icon: "pi pi-sign-out",
-      to: "/sign-out"
-    })
+      to: "/sign-out",
+    });
   }
-  return items
-})
+  return items;
+});
 
 // Programmatic routing
 const redirect = (path) => {
   router.push(path);
-}
+};
 
 const queryObj = computed(() => {
-  return productsStore.getQueryParams(1, searchQuery.value).asObj
-})
+  return productsStore.getQueryParams(1, searchQuery.value).asObj;
+});
 
 const onSearch = (e) => {
   e.preventDefault();
-  if(searchQuery.value){
-    router.push({path: '/search', query: queryObj.value})
+  if (searchQuery.value) {
+    router.push({ path: "/search", query: queryObj.value });
   }
-  searchQuery.value = '';
-}
+  searchQuery.value = "";
+};
 </script>
 
 <style>
@@ -197,7 +189,7 @@ const onSearch = (e) => {
 
   .nav-items {
     position: absolute;
-    top: 97px;
+    top: 95px;
     left: 0;
     width: 100vw;
     display: flex;
@@ -217,7 +209,7 @@ const onSearch = (e) => {
     width: 300px;
   }
 
-  .search-input-wrapper{
+  .search-input-wrapper {
     position: absolute;
     top: 59px;
     left: 0;

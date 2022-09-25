@@ -35,7 +35,7 @@ axios.interceptors.response.use((response) => {
 </script>
 
 <template>
-  <Navbar />
+  <Navbar @alabala="fn"/>
   <Loader />
   <RouterView />
   <Toast />
