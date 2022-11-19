@@ -1,11 +1,13 @@
 <template>
   <div class="card" v-cloak="">
     <div class="card-top">
-      <img
-          crossorigin="anonymous"
-          class="card-image"
-          :src="imageUrl"
-      >
+      <router-link :to="`product/${product?.slug}`">
+        <img
+            crossorigin="anonymous"
+            class="card-image"
+            :src="imageUrl"
+        >
+      </router-link>
       <Button icon="pi pi-heart"
               @mouseenter="isFavoritesButtonHovered = true"
               @mouseleave="isFavoritesButtonHovered = false"
@@ -17,7 +19,9 @@
       </div>
     </div>
     <div class="card-body">
-      <span class="product-title" v-tooltip.bottom="product.name">{{ computedTitle }}</span>
+      <router-link :to="`product/${product?.slug}`" class="product-title" v-tooltip.bottom="product.name">
+        {{ computedTitle }}
+      </router-link>
       <div class="product-card-footer">
         <span class="product-rating">
           <Rating :modelValue="start" :readonly="true" :cancel="false" class="rating"/>
@@ -82,7 +86,7 @@ const computedPrice = computed(() => {
 })
 
 const computedBadges = (() => {
-  
+
 })
 
 const priceWholePart = computed(() => {
@@ -124,6 +128,12 @@ const addToCart = () => {
 </script>
 
 <style>
+
+a{
+  text-decoration: none;
+  color: unset;
+}
+
 .product-card-favorites-button {
   position: absolute;
   top: 5px;
@@ -154,7 +164,7 @@ const addToCart = () => {
   width: 100%;
 }
 
-.card-top{
+.card-top {
   position: relative;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="cart-page-wrapper">
+  <div class="cart-page-wrapper" v-if="cart.getCartItems.length">
     <h1>Cart</h1>
     <div class="cart-content-wrapper">
       <div class="cart-content">
@@ -57,6 +57,9 @@
         </div>
       </div>
     </div>
+  </div>
+  <div v-else>
+    <h1>nothing in cart</h1>
   </div>
 </template>
 
