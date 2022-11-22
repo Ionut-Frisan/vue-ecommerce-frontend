@@ -9,110 +9,118 @@
       </p>
     </div>
     <form
-      class="form-content"
-      @submit.prevent="onSubmit"
+        class="form-content"
+        @submit.prevent="onSubmit"
     >
       <div class="name">
         <InputText
-          v-model="data.fname"
-          :class="[{ 'input-error': errors?.fname?.length },'input-credentials', 'p-inputtext-lg', 'single-line-inputs']"
-          type="text"
-          placeholder="First name"
-          name="fname"
-          @blur="validateSingleField('fname')"
+            v-model="data.fname"
+            :class="[{ 'input-error': errors?.fname?.length },'input-credentials', 'p-inputtext-lg', 'single-line-inputs']"
+            type="text"
+            placeholder="First name"
+            name="fname"
+            @blur="validateSingleField('fname')"
         />
         <InputText
-          v-model="data.lname"
-          :class="[{ 'input-error': errors?.lname?.length },'input-credentials', 'p-inputtext-lg', 'single-line-inputs']"
-          type="text"
-          placeholder="Last name"
-          name="lname"
-          @blur="validateSingleField('lname')"
+            v-model="data.lname"
+            :class="[{ 'input-error': errors?.lname?.length },'input-credentials', 'p-inputtext-lg', 'single-line-inputs']"
+            type="text"
+            placeholder="Last name"
+            name="lname"
+            @blur="validateSingleField('lname')"
         />
       </div>
       <ul class="errors">
         <li
-          v-for="err in errors?.fname?.concat(errors?.lname)"
-          class="error-message"
+            v-for="err in errors?.fname?.concat(errors?.lname)"
+            class="error-message"
         >
           {{ err }}
         </li>
       </ul>
       <InputText
-        v-model="data.email"
-        :class="[{ 'input-error': errors?.email?.length },'input-credentials', 'p-inputtext-lg']"
-        type="text"
-        placeholder="Email"
-        name="email"
-        @blur="validateSingleField('email')"
+          v-model="data.email"
+          :class="[{ 'input-error': errors?.email?.length },'input-credentials', 'p-inputtext-lg']"
+          type="text"
+          placeholder="Email"
+          name="email"
+          @blur="validateSingleField('email')"
       />
       <ul class="errors">
         <li
-          v-for="err in errors?.email"
-          class="error-message"
+            v-for="err in errors?.email"
+            class="error-message"
         >
           {{ err.charAt(0).toUpperCase() + err.slice(1) }}
         </li>
       </ul>
       <span class="p-input-icon-right">
         <i
-          class="pi"
-          :class="{
+            class="pi"
+            :class="{
             'pi-eye': showPassword,
             'pi-eye-slash': !showPassword,
           }"
-          @click="togglePassType"
+            @click="togglePassType"
         />
         <InputText
-          v-model="data.password"
-          :type="passType"
-          placeholder="Password"
-          :class="[{ 'input-error': errors?.password?.length },'input-credentials', 'p-inputtext-lg']"
-          @blur="validateSingleField('password')"
+            v-model="data.password"
+            :type="passType"
+            placeholder="Password"
+            :class="[{ 'input-error': errors?.password?.length },'input-credentials', 'p-inputtext-lg']"
+            @blur="validateSingleField('password')"
         />
       </span>
       <ul class="errors">
         <li
-          v-for="err in errors?.password"
-          class="error-message"
+            v-for="err in errors?.password"
+            class="error-message"
         >
           {{ err.charAt(0).toUpperCase() + err.slice(1) }}
         </li>
       </ul>
       <span class="p-input-icon-right">
         <i
-          class="pi"
-          :class="{
+            class="pi"
+            :class="{
             'pi-eye': showPassword,
             'pi-eye-slash': !showPassword,
           }"
-          @click="togglePassType"
+            @click="togglePassType"
         />
         <InputText
-          v-model="data.repeatPassword"
-          :type="passType"
-          placeholder="Confirm password"
-          :class="[{ 'input-error': errors?.repeatPassword?.length },'input-credentials', 'p-inputtext-lg']"
-          @blur="validateSingleField('repeatPassword')"
+            v-model="data.repeatPassword"
+            :type="passType"
+            placeholder="Confirm password"
+            :class="[{ 'input-error': errors?.repeatPassword?.length },'input-credentials', 'p-inputtext-lg']"
+            @blur="validateSingleField('repeatPassword')"
         />
       </span>
       <ul class="errors">
         <li
-          v-for="err in errors?.repeatPassword"
-          class="error-message"
+            v-for="err in errors?.repeatPassword"
+            class="error-message"
         >
           {{ err.charAt(0).toUpperCase() + err.slice(1) }}
         </li>
       </ul>
+<!--      <p v-if="responseErrors.length">-->
+<!--        <Message-->
+<!--            v-for="(err, index) in responseErrors"-->
+<!--            :key="err+index"-->
+<!--            severity="error">-->
+<!--          {{ err }}-->
+<!--        </Message>-->
+<!--      </p>-->
       <Button
-        label="Sign up"
-        class="p-button-success pb-10"
-        type="submit"
+          label="Sign up"
+          class="p-button-success pb-10"
+          type="submit"
       />
-      <span class="divider" />
+      <span class="divider"/>
       <RouterLink
-        to="/reset-password"
-        class="forgot-password"
+          to="/reset-password"
+          class="forgot-password"
       >
         Already have an account? Log in
       </RouterLink>
@@ -124,17 +132,20 @@
 import {useAuthStore} from "../stores/auth.js";
 import {ref, computed} from "vue";
 import {useRouter} from 'vue-router';
+import {useToast} from "primevue/usetoast";
 import axios from "axios";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
+import Message from 'primevue/message';
 
 import validateObject from '../validations/GenericValidations.js';
 
 const auth = useAuthStore();
 const router = useRouter();
-
+const toast = useToast();
 
 const showPassword = ref(false);
+const errors = ref([]);
 
 const data = ref({
   email: '',
@@ -153,7 +164,7 @@ const rules = {
   lname: ['required', 'minLength:3', 'showAs:Last name']
 }
 
-const errors = ref({})
+const responseErrors = ref([]);
 
 const validateSingleField = (field) => {
   const rule = {};
@@ -162,7 +173,7 @@ const validateSingleField = (field) => {
   val[field] = data.value[field];
 
   const err = validateObject(val, rule)
-  errors.value = { ...errors.value, ...err };
+  errors.value = {...errors.value, ...err};
 }
 
 const validateAll = () => {
@@ -171,8 +182,8 @@ const validateAll = () => {
 
 const hasErrors = computed(() => {
   let count = 0;
-  for(const [key, error] of Object.entries(errors.value)){
-    if(error.length) count += 1
+  for (const [key, error] of Object.entries(errors.value)) {
+    if (error.length) count += 1
   }
   return count > 1
 })
@@ -228,7 +239,12 @@ const onSubmit = async () => {
       auth.setAuthToken(res.data.token);
       token = res.data.token;
     }
-  }).catch((err) => console.log(err));
+  }).catch((err) => {
+    responseErrors.value = (err.error.split('\n')).splice(0, err.error.split('\n').length - 1);
+    responseErrors.value.forEach((error) =>{
+      toast.add({severity: 'error', summary: error, life: 20000})
+    })
+  });
 
   if (success) {
     await axios.get("/auth/me", {
@@ -238,9 +254,12 @@ const onSubmit = async () => {
     }).then((res) => {
       if (res.data.success) {
         auth.setUserRole(res.data.data);
-        router.push({name: 'Dashboard', path: '/admin-panel'})
+        router.push({path: '/'})
+        toast.add({severity: 'success', summary: 'Your account has ben created', life: 5000})
       }
-    }).catch((err) => console.log(err));
+    }).catch((err) => {
+      toast.add({severity: 'error', summary: err.error, life: 10000})
+    });
   }
 
 }
@@ -317,17 +336,17 @@ const onSubmit = async () => {
   width: 48% !important;
 }
 
-.input-error, input-error:hover, input-error:enabled:hover{
+.input-error, input-error:hover, input-error:enabled:hover {
   border: 1px solid red !important;
- }
+}
 
-.error-message{
+.error-message {
   color: red;
   padding: 0;
   margin: 0 0 0 0;
 }
 
-.errors{
+.errors {
   padding: 0 20px;
   margin: 0 0 0 0;
   text-align: left;
@@ -336,7 +355,7 @@ const onSubmit = async () => {
   font-size: 12px;
 }
 
-.pb-10{
+.pb-10 {
   margin-bottom: 10px;
 }
 

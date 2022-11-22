@@ -23,6 +23,10 @@ const routes = [
         path: "products",
         component: () => import("../views/Admin/Products.vue"),
       },
+      {
+        path: "categories",
+        component: () => import("../views/Admin/Categories.vue"),
+      },
     ],
     meta: {requiresAuth: true, requiresAdmin: true}
   },

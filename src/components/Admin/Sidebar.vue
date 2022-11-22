@@ -145,7 +145,8 @@ const items = ref([
       {
         key: "3_0",
         label: "Database",
-        icon: "pi pi-fw pi-database"
+        icon: "pi pi-fw pi-database",
+        to: "/admin-panel/categories"
       },
       {
         key: "3_1",
