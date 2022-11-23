@@ -59,7 +59,9 @@
     </div>
   </div>
   <div v-else>
-    <h1>nothing in cart</h1>
+    <div class="empty-cart-placeholder">
+      <i class="pi pi-cart-plus"></i>
+    </div>
   </div>
 </template>
 
@@ -93,8 +95,9 @@ body{
 }
 
 .cart-page-wrapper{
-  width: 1200px;
+  width: 70%;
   margin: auto;
+  padding-bottom: 10%;
 }
 
 .cart-products{
@@ -201,4 +204,29 @@ body{
   transform: translateX(100px);
   opacity: 0;
 }
+
+.empty-cart-placeholder{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@media (max-width: 992px) {
+  .cart-page-wrapper{
+    width: 85%;
+  }
+
+  .cart-content-wrapper{
+    display: flex;
+    flex-flow: column;
+    row-gap: 20px;
+  }
+
+  .cart-proceed-checkout{
+    display: flex;
+    flex-direction: column-reverse;
+    row-gap: 20px;
+  }
+}
+
 </style>

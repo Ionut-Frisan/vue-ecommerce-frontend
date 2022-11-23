@@ -1,7 +1,7 @@
 <template>
   <div class="cart-item">
     <div class="cart-item-wrapper">
-      <div class="">
+      <div class="cart-item-image-container">
         <img
           :src="getImageUrl()"
           crossorigin="anonymous"
@@ -110,6 +110,13 @@ const removeFromCart = () => {
   width: 25px !important;
 }
 
+.cart-item-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+}
+
 .cart-item-image {
   width: 200px;
   max-height: 400px;
@@ -172,6 +179,39 @@ const removeFromCart = () => {
 .cart-item-remove-product{
   color: #1877f2;
   cursor: pointer;
+}
+
+@media (max-width: 992px) {
+
+  .cart-item-image-container{
+    width: 40%;
+    max-height: 200px;
+  }
+  .cart-item-image{
+    width: 100%;
+  }
+
+  .cart-item-details{
+    padding: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .cart-item-wrapper{
+    flex-flow: column;
+  }
+
+  .cart-item-wrapper > * {
+    margin: auto;
+  }
+
+  .cart-item-details > *{
+    margin: auto;
+  }
+
+  .cart-item-image-container{
+    min-width: 100px;
+  }
 }
 
 </style>

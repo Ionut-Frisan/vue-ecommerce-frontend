@@ -49,5 +49,6 @@ body {
   border: 0 !important;
   background-color: #f2f2f7;
   overflow-x: hidden;
+  min-width: 300px;
 }
 </style>
