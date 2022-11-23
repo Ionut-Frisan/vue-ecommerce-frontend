@@ -60,7 +60,17 @@
   </div>
   <div v-else>
     <div class="empty-cart-placeholder">
-      <i class="pi pi-cart-plus"></i>
+      <div class="cart-placeholder-container">
+        <div class="img-background">
+          <img src="../assets/empty-cart.png">
+        </div>
+        <div class="cart-placeholder-text">
+          <h2>Your cart is empty</h2>
+          <router-link to="/">
+            <Button label="Go back to site" />
+          </router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -70,6 +80,7 @@ import {computed, ref} from 'vue';
 import {useCartStore} from "../stores/cart.js";
 import CartItem from "../components/CartItem.vue";
 import {getFormattedPrice} from '../utils/price.js'
+import Button from "primevue/button";
 
 const cart = useCartStore();
 
@@ -90,6 +101,10 @@ const formattedTotal = computed(() => {
 </script>
 
 <style scoped>
+a{
+  text-decoration: none;
+}
+
 body{
   background-color: #fafafa;
 }
@@ -205,10 +220,40 @@ body{
   opacity: 0;
 }
 
+.img-background{
+  margin: auto;
+  padding: 0;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 50%;
+  /*overflow: hidden;*/
+  background-color: rgba(0,0,0,0.03);
+  transform: skew(2deg,10deg);
+}
+
+.img-background > img{
+  transform: translateX(-20px) skew(-4deg, -20deg);
+  max-width: 100%;
+}
+
 .empty-cart-placeholder{
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 60px);
   display: block;
+  padding: 100px 0;
+}
+
+.cart-placeholder-container{
+  width: 70%;
+  margin: auto;
+}
+
+.cart-placeholder-text{
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  flex-flow: column;
+  align-items: center;
 }
 
 @media (max-width: 992px) {
