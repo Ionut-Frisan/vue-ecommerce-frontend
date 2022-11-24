@@ -26,7 +26,14 @@
       cols="20"
     />
   </div>
-
+  <div class="field">
+    <label for="specifications">Specifications</label>
+    <JsonEditorVue
+      v-model="product.specifications"
+      :navigationBar="false"
+    >
+    </JsonEditorVue>
+  </div>
   <div class="field">
     <label
       for="category"
@@ -152,6 +159,7 @@ import Dropdown from "primevue/dropdown";
 import ToggleButton from 'primevue/togglebutton';
 import Button from 'primevue/button';
 import ConfirmPopup from 'primevue/confirmpopup';
+import JsonEditorVue from 'json-editor-vue'
 
 import validateObject from '../../validations/GenericValidations.js';
 
@@ -225,8 +233,11 @@ const getRequestParams = () => {
     for(const image of prod.value.images){
       formData.append('images', image)
     }
+
+  // let specifications = JSON.parse(product.value.specifications) || null;
+
   // formData.append('images', prod.value.image);
-  formData.append('category', prod.value?.category?.value);
+  formData.append('category', prod.value?.category?.value || prod.value?.category?._id);
   formData.append('name', prod.value.name);
   formData.append('description', prod.value.description);
   formData.append('price', prod.value.price);
@@ -254,7 +265,8 @@ const submit = async () => {
       })
       .catch((err) => {toast.add({severity:'error', summary:'Error', detail:'There was an error', life: 3000})})
   if(props.functionality === 'edit'){
-    await axios.put(`/products/${product._id}`, getRequestParams(), {
+    console.log(product);
+    await axios.put(`/products/${product.value._id || product.value.id}`, getRequestParams(), {
       headers: {
         'content-type': 'multipart/form-data'
       }

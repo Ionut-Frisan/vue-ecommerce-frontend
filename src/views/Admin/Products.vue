@@ -172,11 +172,12 @@
 
     <Dialog
       v-model:visible="productDialog"
-      :style="{ width: '450px' }"
+      :style="{ 'min-width': '400px', width: '50%' }"
       header="Product Details"
       :modal="true"
       class="p-fluid"
       :closable="false"
+      :maximizable="true"
     >
       <add-update-product
         :functionality="dialogFunctionality"
@@ -401,8 +402,7 @@ watch(() => query.value, () => {
 }
 
 @media screen and (max-width: 960px) {
-
-  .table-header{
+.table-header{
     align-items: start;
   }
 }

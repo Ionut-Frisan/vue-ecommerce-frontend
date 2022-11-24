@@ -70,7 +70,7 @@ const rating = computed(() => {
 })
 
 const start = computed(() => {
-  return Math.round(props.product?.averageRating || 0)
+  return Math.round(props.product?.averageRating || 4)
 })
 
 const computedTitle = computed(() => {
