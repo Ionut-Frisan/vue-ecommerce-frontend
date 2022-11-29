@@ -100,7 +100,8 @@
         id="discount"
         v-model="product.discount"
         integeronly
-        value="0"
+        :min="0"
+        :max="99.99"
       />
     </div>
     <div class="field col">

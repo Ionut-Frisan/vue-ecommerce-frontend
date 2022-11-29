@@ -22,10 +22,10 @@
       <router-link :to="`product/${product?.slug}`" class="product-title" v-tooltip.bottom="product.name">
         {{ computedTitle }}
       </router-link>
+      <br>
       <div class="product-card-footer">
         <span class="product-rating">
-          <Rating :modelValue="start" :readonly="true" :cancel="false" class="rating"/>
-          <p class="rating-value">({{ rating }})</p>
+          <Rating :modelValue="start" :readonly="true" :cancel="false" class="rating" v-tooltip.top="rating"/>
         </span>
         <div class="product-actions">
           <span class="price">
@@ -65,12 +65,11 @@ const imageUrl = computed(() => {
 })
 
 const rating = computed(() => {
-  // TODO: make this the no. of ratings instead of average? and average on hover?
-  return props.product?.averageRating || 0;
+  return props.product?.averageRating ? props.product?.averageRating.toString() : 'No reviews yet';
 })
 
 const start = computed(() => {
-  return Math.round(props.product?.averageRating || 4)
+  return Math.ceil(props.product?.averageRating || 0)
 })
 
 const computedTitle = computed(() => {

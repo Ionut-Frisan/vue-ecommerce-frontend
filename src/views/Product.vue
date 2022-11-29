@@ -1,59 +1,41 @@
 <template>
-  <div class="product-wrapper">
+  <div :class="['product-wrapper', {'no-scroll': isGalleryFS}]">
     <div class="product-hero">
-      <Galleria
-          :value="imagesUrls"
-          :num-visible="5"
-          :show-indicators="true"
-          :show-thumbnails="false"
-          :show-indicators-on-item="true"
-          :circular="true"
-          container-style="width: 50%;"
-      >
-        <template #item="slotProps">
-          <div class="card-top">
-            <div class="badges-offer-right">
-              <span class="badge discount-badge" v-if="hasDiscount">-{{ product.discount }}%</span>
-            </div>
-            <img
-                :src="slotProps.item.src"
-                :alt="product.title"
-                crossorigin="anonymous"
-                style="object-fit: contain; max-width: 100%; max-height: 100%"
-            />
-          </div>
-        </template>
-      </Galleria>
+      <ImageGallery
+          :source="imagesUrls"
+          custom-class="image-gallery"
+          :full-screen="isGalleryFS"
+          @closeGallery="isGalleryFS=false"
+          @openFSGallery="isGalleryFS=true"
+          @keyup.esc.prevent="isGalleryFS=false"
+      ></ImageGallery>
       <div class="title-and-stuff">
         <span>
-          <h3>{{ computedTitle }}</h3>
-          <span v-if="!product?.discount"
+          <h2> {{ computedTitle }}</h2>
+          <span v-if="!product?.discount" style="display: block; font-size: 1.3rem; color: #ef2809;"
           >{{ priceWholePart }}<sup>{{ priceFloatPart }}</sup> GBP</span
           >
           <p v-else>
             <span style="font-size: 0.85em"
             ><del>{{ parseFloat(product.price)?.toFixed(2) }} GBP </del></span
             >
-            <span style="display: block"
-            >new price: {{
-                priceWholePart
-              }}<sup>{{ priceFloatPart }}</sup> GBP</span
-            >
+            <span style="display: block; font-size: 1.3rem; color: #ef2809;">
+              {{ priceWholePart }}<sup>{{ priceFloatPart }}</sup> GBP
+            </span>
           </p>
         </span>
         <span class="product-action-buttons">
           <Button
               label="Add to cart"
               icon="pi pi-shopping-cart"
-              class="p-button-md"
+              class="p-button-sm"
           />
           <Button
               label="Add to favourites"
               icon="pi pi-heart"
-              class="p-button-md"
+              class="p-button-sm p-button-danger"
           />
         </span>
-        <!-- TODO: move this to a separate ratings section <rating model-value="rating" :readonly="true"></rating> -->
       </div>
     </div>
     <div class="product-info-panels">
@@ -79,11 +61,11 @@
           icon="pi pi-plus"
           iconPos="left"
           style="margin-bottom: 10px"
-          :disabled="!auth.authenticated"
+          :disabled="!canReview"
           @click="openDialog"
         ></Button>
         <div v-if="reviews.length">
-          <div v-for="review in reviews" :key="review.id || review._id">
+          <div v-for="(review, index) in reviews" :key="review.id || review._id">
             <span class="review-general-info">
               <Rating
                   style="display: inline"
@@ -104,6 +86,7 @@
                 {{review.text}}
               </p>
             </span>
+            <Divider v-if="index !== reviews.length - 1"></Divider>
           </div>
         </div>
         <p v-else> This product has no reviews </p>
@@ -159,6 +142,10 @@ import Textarea from 'primevue/textarea';
 import Dialog from 'primevue/dialog';
 import {useToast} from "primevue/usetoast";
 import axios from "axios";
+import Divider from 'primevue/divider';
+import ImageGallery from "../components/ImageGallery.vue";
+
+import {getReviewsForProduct} from "../managers/RequestManagers/review.js";
 
 const route = useRoute();
 const productStore = useProductStore();
@@ -167,26 +154,14 @@ const toast = useToast();
 
 const product = ref({});
 const newReview = ref({});
-const reviews = ref([
-  {
-    title: "test for review",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Euismod nisi porta lorem mollis aliquam ut porttitor. Ac feugiat sed lectus vestibulum mattis ullamcorper. Pulvinar elementum integer enim neque. Mauris pellentesque pulvinar pellentesque habitant morbi tristique. Ut tortor pretium viverra suspendisse potenti nullam ac tortor. Vitae proin sagittis nisl rhoncus mattis rhoncus urna. Morbi tincidunt ornare massa eget egestas. Amet est placerat in egestas erat imperdiet.\n" +
-        "\n" +
-        "In dictum non consectetur a erat nam at lectus. Risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Nulla facilisi morbi tempus iaculis urna id volutpat lacus. Mattis enim ut tellus elementum sagittis vitae et leo. Dolor sit amet consectetur adipiscing. Placerat vestibulum lectus mauris ultrices eros.",
-    rating: 4,
-    createAt: "2022-11-23T16:42:17.040+00:00",
-    user: {
-      firstName: "Ionut",
-      lastName: "Frisan"
-    }
-  }
-]);
+const reviews = ref([]);
 const isGalleryFS = ref(false);
 const isDialogOpen = ref(false);
 
 onMounted(async () => {
   const slug = route.params.slug;
   product.value = await productStore.fetchSingleProduct(slug);
+  reviews.value = await getReviewsForProduct(product.value._id || product.value.id);
 });
 
 const imagesUrls = computed(() => {
@@ -226,6 +201,10 @@ const rating = computed(() => {
 
 const hasDiscount = computed(() => {
   return product.value.discount !== 0
+})
+
+const canReview = computed(() => {
+  return !reviews.value.some((review) => review.isMine) && auth.authenticated;
 })
 
 const openDialog = () => {
@@ -287,17 +266,22 @@ const submitReview = async () => {
 }
 
 .product-wrapper {
-  width: 70%;
-  margin: 10% auto 0 auto;
+  width: 80%;
+  margin: 5% auto 0 auto;
 }
 
 .product-hero {
   display: flex;
   flex-direction: row;
+  background-color: #fff;
+  padding: 1rem;
+  height: 500px;
+  border: 1px solid #dee2e6;
+  border-radius: 3px;
 }
 
 .title-and-stuff {
-  width: 50%;
+  width: 40%;
   padding: 0 1em;
   position: relative;
   display: flex;
@@ -307,7 +291,6 @@ const submitReview = async () => {
 
 .product-action-buttons * {
   margin: 0.5em;
-
 }
 
 .product-action-buttons {
@@ -344,6 +327,23 @@ const submitReview = async () => {
 
 .product-info-panels > *:last-child{
   padding-bottom: 200px;
+}
+
+@media (max-width: 1260px) {
+  .product-action-buttons{
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .product-action-buttons > *{
+    width: 100%;
+  }
+}
+
+@media (max-width: 992px) {
+  .title-and-stuff{
+    width: 50%;
+  }
 }
 
 </style>

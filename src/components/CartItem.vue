@@ -189,6 +189,8 @@ const removeFromCart = () => {
   }
   .cart-item-image{
     width: 100%;
+    max-height: 100%;
+    object-fit: contain;
   }
 
   .cart-item-details{

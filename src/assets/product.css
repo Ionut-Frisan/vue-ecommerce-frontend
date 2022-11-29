@@ -131,3 +131,27 @@
 .p-rating-icon{
     color: #f9bf3b !important;
 }
+
+.image-gallery{
+    width: 60%;
+    height: 100%;
+    background-color: #f2f2f7;
+}
+
+.image-gallery img{
+    object-fit: cover;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.image-gallery .displayed-image{
+    height: calc(100% - 20px);
+    margin: auto;
+    width: fit-content;
+}
+
+@media (max-width: 992px) {
+    .image-gallery{
+        width: 50%;
+    }
+}
