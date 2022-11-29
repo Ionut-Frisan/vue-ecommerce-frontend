@@ -23,6 +23,9 @@
               {{ priceWholePart }}<sup>{{ priceFloatPart }}</sup> GBP
             </span>
           </p>
+          <br>
+          <br>
+          <Rating :modelValue="rating" :readonly="true" :cancel="false" class="rating" v-tooltip.bottom="ratingText"/>
         </span>
         <span class="product-action-buttons">
           <Button
@@ -196,8 +199,12 @@ const priceFloatPart = computed(() => {
 });
 
 const rating = computed(() => {
-  return Math.round(product?.averageRating || 0);
+  return Math.ceil(product?.value.averageRating || 0);
 });
+
+const ratingText = computed(() => {
+  return product?.value.averageRating? product?.value.averageRating.toString() : 'No reviews yet'
+})
 
 const hasDiscount = computed(() => {
   return product.value.discount !== 0
@@ -343,6 +350,29 @@ const submitReview = async () => {
 @media (max-width: 992px) {
   .title-and-stuff{
     width: 50%;
+  }
+}
+
+@media (max-width: 600px) {
+  .product-wrapper{
+    width: 95%;
+  }
+
+  .product-hero{
+    flex-direction: column;
+    height: fit-content;
+    max-width: unset;
+  }
+
+  .title-and-stuff{
+    width: 100%;
+  }
+  .image-gallery{
+    width: 100%;
+  }
+
+  .product-action-buttons{
+    padding-top: 2rem;
   }
 }
 
