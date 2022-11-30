@@ -35,7 +35,7 @@
           icon="pi pi-heart-fill"
           class="p-button-outlined"
           style="color: white"
-          badge="0"
+          :badge="productsStore.favoritesCount.toString()"
           badge-class="p-badge-danger"
         />
       </li>

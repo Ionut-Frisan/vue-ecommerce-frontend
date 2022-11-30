@@ -6,7 +6,8 @@ export const useProductStore = defineStore('products', {
     data: {},
     limit: 20,
     limitOptions: [20, 30, 50],
-    isLoading: false
+    isLoading: false,
+    favoritesCount: 0,
   }),
   getters: {
     getLimit() {
@@ -48,12 +49,9 @@ export const useProductStore = defineStore('products', {
       await axios
         .get(`/products${queryParams}`)
         .then((res) => {
-          console.log(res);
           this.data = res.data
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     },
     async fetchSingleProduct(slug){
       let product = {}
@@ -62,8 +60,20 @@ export const useProductStore = defineStore('products', {
         .then((res) => {
           product = res.data.data[0];
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {})
       return product
+    },
+    setFavoriteValue(id, newValue){
+      this.data.data = this.data.data
+        .map((product) => {
+          const prodId = product._id || product.id;
+          return prodId === id ?
+            {
+              ...product,
+              favorite: newValue
+            } :
+            product
+        })
     }
   }
 })

@@ -6,8 +6,9 @@ import Loader from '../src/components/Loader.vue';
 import {useAuthStore} from "./stores/auth.js";
 import {useCartStore} from "./stores/cart.js";
 import {useProductStore} from "./stores/product.js";
-import {onBeforeMount} from "vue";
+import {onBeforeMount, onMounted} from "vue";
 import axios from "axios";
+import {getMyFavorites} from "./managers/RequestManagers/favorite.js";
 
 const auth = useAuthStore();
 const cart = useCartStore();
@@ -16,6 +17,13 @@ const product = useProductStore();
 onBeforeMount(() => {
   auth.initFromLocal();
   cart.initializeStore();
+})
+
+onMounted(async () => {
+  if(auth.isAuthenticated){
+    const favorites = await getMyFavorites();
+    product.favoritesCount = favorites.length;
+  }
 })
 
 axios.interceptors.request.use((config) => {

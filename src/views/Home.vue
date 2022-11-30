@@ -8,6 +8,7 @@
           v-for="product in productsStore.getProducts"
           :key="product._id"
           :product="product"
+          :authenticated="authStore.authenticated"
       />
     </TransitionGroup>
   </div>
@@ -28,12 +29,14 @@ import {useRoute, useRouter} from 'vue-router';
 import Paginator from 'primevue/paginator';
 import {useToast} from "primevue/usetoast";
 import {useProductStore} from "../stores/product.js";
+import {useAuthStore} from "../stores/auth.js";
 
 
 const route = useRoute();
 const router = useRouter();
 const toast = useToast();
 const productsStore = useProductStore();
+const authStore = useAuthStore();
 
 const searchQuery = ref('');
 const products = productsStore.getProducts;

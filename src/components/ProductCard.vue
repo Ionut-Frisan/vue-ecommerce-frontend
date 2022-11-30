@@ -11,7 +11,10 @@
       <Button icon="pi pi-heart"
               @mouseenter="isFavoritesButtonHovered = true"
               @mouseleave="isFavoritesButtonHovered = false"
-              :class="favoritesButtonClasses"/>
+              :class="favoritesButtonClasses"
+              @click="toggleFavorite()"
+              :disabled="!authenticated"
+      />
       <div class="badges-offer-right">
         <span class="badge discount-badge" v-if="hasDiscount">-{{ product.discount }}%</span>
       </div>
@@ -47,13 +50,18 @@ import Button from "primevue/button";
 import {useToast} from "primevue/usetoast";
 
 import {useCartStore} from "../stores/cart.js";
+import {useProductStore} from "../stores/product.js";
+import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite.js";
 
 const props = defineProps({
   product: {
     type: Object,
     required: true
-  }
+  },
+  authenticated: Boolean,
 })
+
+const productStore = useProductStore();
 
 const imageUrl = computed(() => {
   if (Array.isArray(props.product.images)) {
@@ -109,9 +117,15 @@ const favoritesButtonClasses = computed(() => {
   // TODO: maybe disable it if user is not logged in
   let classes = 'p-button-rounded product-card-favorites-button p-button-lg'
   if (isFavoritesButtonHovered.value) {
-    classes = `${classes} p-button-danger`
+    if(!props.product.favorite)
+      classes = `${classes} p-button-danger`
+    else
+      classes = `${classes} p-button-secondary`
   } else {
-    classes = `${classes} p-button-text  p-button-secondary`
+    if(props.product.favorite)
+      classes = `${classes} p-button-danger`
+    else
+      classes = `${classes} p-button-text  p-button-secondary`
   }
   return classes;
 })
@@ -123,6 +137,23 @@ const toast = useToast();
 const addToCart = () => {
   cartStore.addToCart({product: props.product, quantity: 1});
   toast.add({severity: 'success', detail: 'Product was added to cart', life: 3000});
+}
+
+const toggleFavorite = async () => {
+  if (!props.product.favorite) {
+    const res = await addToFavorite(props.product._id || props.product.id)
+    if(res.success) {
+      productStore.favoritesCount += 1;
+      productStore.setFavoriteValue(props.product._id || props.product.id, true)
+    }
+  }
+  else {
+    const res = await removeFromFavorites(props.product._id || props.product.id)
+    if(res.success) {
+      productStore.favoritesCount -= 1;
+      productStore.setFavoriteValue(props.product._id || props.product.id, false)
+    }
+  }
 }
 </script>
 

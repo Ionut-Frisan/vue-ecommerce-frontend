@@ -32,11 +32,13 @@
               label="Add to cart"
               icon="pi pi-shopping-cart"
               class="p-button-sm"
+              @click="addToCart"
           />
           <Button
-              label="Add to favourites"
+              :label="favButtonLabel"
               icon="pi pi-heart"
-              class="p-button-sm p-button-danger"
+              :class="favButtonClasses"
+              @click="toggleFavorite"
           />
         </span>
       </div>
@@ -137,6 +139,7 @@ import {computed, onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import {useProductStore} from "../stores/product.js";
 import {useAuthStore} from "../stores/auth.js";
+import {useCartStore} from "../stores/cart.js";
 import Galleria from "primevue/galleria";
 import Button from "primevue/button";
 import Rating from "primevue/rating";
@@ -149,10 +152,12 @@ import Divider from 'primevue/divider';
 import ImageGallery from "../components/ImageGallery.vue";
 
 import {getReviewsForProduct} from "../managers/RequestManagers/review.js";
+import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite.js";
 
 const route = useRoute();
 const productStore = useProductStore();
 const auth = useAuthStore();
+const cart = useCartStore();
 const toast = useToast();
 
 const product = ref({});
@@ -214,6 +219,14 @@ const canReview = computed(() => {
   return !reviews.value.some((review) => review.isMine) && auth.authenticated;
 })
 
+const favButtonClasses = computed(() => {
+  return product.value.favorite ? 'p-button-sm p-button-danger p-button-outlined' : 'p-button-sm p-button-danger '
+})
+
+const favButtonLabel = computed(() => {
+  return product.value.favorite ? 'Remove from favourites' : 'Add to favourites'
+})
+
 const openDialog = () => {
   if(!auth.authenticated) return;
   isDialogOpen.value = true;
@@ -250,6 +263,27 @@ const submitReview = async () => {
         else
           toast.add({severity: 'error', detail: 'Something went wrong.', life: 5000, closable: true})
       });
+}
+
+const toggleFavorite = async () => {
+  if (!product.value.favorite) {
+    const res = await addToFavorite(product.value._id || product.value.id)
+    if(res.success) {
+      productStore.favoritesCount += 1;
+      product.value.favorite = true;
+    }
+  }
+  else {
+    const res = await removeFromFavorites(product.value._id || product.value.id)
+    if(res.success) {
+      productStore.favoritesCount -= 1;
+      product.value.favorite = false;
+    }
+  }
+}
+
+const addToCart = () => {
+  cart.addToCart({quantity: 1, product: product.value});
 }
 
 </script>
@@ -336,7 +370,7 @@ const submitReview = async () => {
   padding-bottom: 200px;
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 1380px) {
   .product-action-buttons{
     flex-direction: column;
     margin: 0;
