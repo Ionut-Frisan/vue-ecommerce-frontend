@@ -29,7 +29,7 @@
             <strong><span class="cart-total-info"> Total: <span class="cart-total-value"> {{ formattedTotalWithFee.whole }}<sup>{{ formattedTotalWithFee.float }}</sup> GBP</span></span></strong>
           </div>
           <a
-            href="#"
+            href="/checkout"
             class="link checkout-btn"
           >
             <div class="btn-icon">

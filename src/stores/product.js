@@ -63,6 +63,7 @@ export const useProductStore = defineStore('products', {
         .catch((err) => {})
       return product
     },
+    // TODO: get favorites count from backend on mounted
     setFavoriteValue(id, newValue){
       this.data.data = this.data.data
         .map((product) => {

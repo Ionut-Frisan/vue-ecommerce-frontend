@@ -27,6 +27,10 @@ const routes = [
         path: "categories",
         component: () => import("../views/Admin/Categories.vue"),
       },
+      {
+        path: "config",
+        component: () => import("../views/Admin/Config.vue"),
+      },
     ],
     meta: {requiresAuth: true, requiresAdmin: true}
   },
@@ -43,6 +47,11 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: () => import('../views/Cart.vue')
+  },
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: () => import('../views/Checkout.vue')
   },
   {
     path: '/product/:slug',

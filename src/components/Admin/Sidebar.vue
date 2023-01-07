@@ -40,6 +40,19 @@ const contextMenuItems = ref([
 
 const items = ref([
   {
+    key: "general",
+    label: "General settings",
+    icon: "pi pi-fw pi-cog",
+    items: [
+      {
+        key: "general_0",
+        label: "Configuration",
+        icon: "pi pi-fw pi-file",
+        to: "/admin-panel/config"
+      }
+    ]
+  },
+  {
     key: "0",
     label: "Products",
     icon: "pi pi-fw pi-box",
