@@ -1,5 +1,8 @@
 <template>
-  <div class="cart-page-wrapper" v-if="cart.getCartItems.length">
+  <div
+    v-if="cart.getCartItems.length"
+    class="cart-page-wrapper"
+  >
     <h1>Cart</h1>
     <div class="cart-content-wrapper">
       <div class="cart-content">
@@ -76,11 +79,16 @@
 </template>
 
 <script setup>
-import {computed, ref} from 'vue';
+import {computed, ref, onBeforeMount} from 'vue';
 import {useCartStore} from "../stores/cart.js";
 import CartItem from "../components/CartItem.vue";
 import {getFormattedPrice} from '../utils/price.js'
 import Button from "primevue/button";
+import axios from "axios";
+
+onBeforeMount(async () => {
+  await getCartPriceBackend();
+})
 
 const cart = useCartStore();
 
@@ -97,7 +105,17 @@ const formattedTotalWithFee = computed(() => {
 })
 const formattedTotal = computed(() => {
   return getFormattedPrice(cart.getCartTotalPrice);
-})
+});
+const getCartPriceBackend = async () => {
+  const products = items.value.map((item) => ({
+    quantity: item.quantity,
+    id: item.product.id || item.product._id
+  }));
+  const res = await axios.post('/products/cartPrice', {products});
+  console.log(res);
+  return res;
+}
+// TODO: implement this
 </script>
 
 <style scoped>

@@ -37,6 +37,7 @@
           style="color: white"
           :badge="productsStore.favoritesCount.toString()"
           badge-class="p-badge-danger"
+          @click="redirect('/favorites')"
         />
       </li>
       <li class="nav-item">
@@ -100,7 +101,7 @@ const computedItems = computed(() => {
     });
     items.push({
       label: "Register",
-      icon: "pi pi-sign-in",
+      icon: "pi pi-user-plus",
       to: "/sign-up",
     });
   } else {

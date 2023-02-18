@@ -216,7 +216,7 @@ const hasDiscount = computed(() => {
 })
 
 const canReview = computed(() => {
-  return !reviews.value.some((review) => review.isMine) && auth.authenticated;
+  return !reviews.value.some((review) => review.isMine) && !!auth.authenticated;
 })
 
 const favButtonClasses = computed(() => {
@@ -233,16 +233,17 @@ const openDialog = () => {
 }
 
 const submitReview = async () => {
+  console.log(auth.isAuthenticated);
   let hasErrors = false;
   if(!newReview.value.rating) {
     toast.add({severity: 'error', detail: 'Please choose a rating.', life: 5000, closable: true});
     hasErrors = true;
   }
-  if(newReview.value.title && newReview.value.title.length < 2){
+  if(newReview.value.title && newReview.value.title.length < 2 || !newReview.value.title){
     toast.add({severity: 'error', detail: 'Title must be over 2 characters or none.', life: 5000, closable: true});
     hasErrors = true;
   }
-  if(newReview.value.text && newReview.value.text.length < 2){
+  if(newReview.value.text && newReview.value.text.length < 2 || !newReview.value.text){
     toast.add({severity: 'error', detail: 'Description must be over 5 characters or none.', life: 5000, closable: true});
     hasErrors = true;
   }
@@ -261,7 +262,10 @@ const submitReview = async () => {
         if(err.error.includes('Duplicate field value entered:'))
           toast.add({severity: 'error', detail: 'You have already reviewed this product.', life: 5000, closable: true})
         else
-          toast.add({severity: 'error', detail: 'Something went wrong.', life: 5000, closable: true})
+          if (err.error.includes('Not authorized to access this route'))
+            toast.add({severity: 'error', detail: 'You must be logged in to review a product.', life: 5000, closable: true})
+          else
+            toast.add({severity: 'error', detail: 'Something went wrong.', life: 5000, closable: true})
       });
 }
 

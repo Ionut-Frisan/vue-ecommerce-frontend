@@ -9,10 +9,16 @@ import {useProductStore} from "./stores/product.js";
 import {onBeforeMount, onMounted} from "vue";
 import axios from "axios";
 import {getMyFavorites} from "./managers/RequestManagers/favorite.js";
+import {checkToken} from "./managers/RequestManagers/auth.js";
 
 const auth = useAuthStore();
 const cart = useCartStore();
 const product = useProductStore();
+
+const checkAuthentication = async () => {
+  const authenticated = await checkToken();
+  if (!authenticated) await auth.logOut();
+}
 
 onBeforeMount(() => {
   auth.initFromLocal();
@@ -20,6 +26,7 @@ onBeforeMount(() => {
 })
 
 onMounted(async () => {
+  await checkAuthentication();
   if(auth.isAuthenticated){
     const favorites = await getMyFavorites();
     product.favoritesCount = favorites.length;
@@ -43,7 +50,7 @@ axios.interceptors.response.use((response) => {
 </script>
 
 <template>
-  <Navbar @alabala="fn"/>
+  <Navbar/>
   <Loader />
   <RouterView />
   <Toast />
