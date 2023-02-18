@@ -1,5 +1,5 @@
 <template>
-  <div :class="['product-wrapper', {'no-scroll': isGalleryFS}]">
+  <div :class="['product-wrapper', {'no-scroll': isGalleryFS}]" v-if="shouldRender">
     <div class="product-hero">
       <ImageGallery
           :source="imagesUrls"
@@ -45,16 +45,16 @@
     </div>
     <div class="product-info-panels">
       <Panel header="Description">
-        <p> {{product.description || '-'}}</p>
+        <p> {{ product.description || '-' }}</p>
       </Panel>
       <Panel header="Specifications">
         <div class="product-specifications" v-if="product.specifications">
           <template v-for="(val, key, index) in product.specifications" :key="'spec-'+index">
             <span :class="{'even-row': index % 2 === 1}" style="font-weight: 500">
-              {{key}}
+              {{ key }}
             </span>
             <span :class="{'even-row': index % 2 === 1}">
-              {{val}}
+              {{ val }}
             </span>
           </template>
         </div>
@@ -62,12 +62,12 @@
       </Panel>
       <Panel header="Reviews">
         <Button
-          label="Add a review"
-          icon="pi pi-plus"
-          iconPos="left"
-          style="margin-bottom: 10px"
-          :disabled="!canReview"
-          @click="openDialog"
+            label="Add a review"
+            icon="pi pi-plus"
+            iconPos="left"
+            style="margin-bottom: 10px"
+            :disabled="!canReview"
+            @click="openDialog"
         ></Button>
         <div v-if="reviews.length">
           <div v-for="(review, index) in reviews" :key="review.id || review._id">
@@ -80,15 +80,15 @@
               ></Rating>
               &nbsp&nbsp
                <span>
-                {{review.user.firstName + " " + review.user.lastName}}
+                {{ review.user.firstName + " " + review.user.lastName }}
               </span>
             </span>
             <span>
               <p class="review-title">
-                {{review.title}}
+                {{ review.title }}
               </p>
               <p class="review-text">
-                {{review.text}}
+                {{ review.text }}
               </p>
             </span>
             <Divider v-if="index !== reviews.length - 1"></Divider>
@@ -98,20 +98,20 @@
       </Panel>
     </div>
     <Dialog
-      header="Add a review"
-      v-model:visible="isDialogOpen"
-      :modal="true"
+        header="Add a review"
+        v-model:visible="isDialogOpen"
+        :modal="true"
     >
       <div class="dialog-content-review">
         <Rating
-          v-model="newReview.rating"
-          :cancel="false"
+            v-model="newReview.rating"
+            :cancel="false"
         >
         </Rating>
         <span class="field">
           <label for="username2">Title</label>
           <InputText
-            v-model="newReview.title"
+              v-model="newReview.title"
           >
           </InputText>
         </span>
@@ -126,12 +126,20 @@
         </span>
         <div style="padding-top: 10px; width: fit-content; margin: auto;">
           <Button
-            label="Submit"
-            @click="submitReview"
+              label="Submit"
+              @click="submitReview"
           ></Button>
         </div>
       </div>
     </Dialog>
+  </div>
+  <div v-else-if="isLoading"></div>
+  <div v-else
+       id="no-product"
+  >
+    <span>
+      Product could not be found or something went wrong.
+    </span>
   </div>
 </template>
 <script setup>
@@ -140,7 +148,6 @@ import {useRoute} from "vue-router";
 import {useProductStore} from "../stores/product.js";
 import {useAuthStore} from "../stores/auth.js";
 import {useCartStore} from "../stores/cart.js";
-import Galleria from "primevue/galleria";
 import Button from "primevue/button";
 import Rating from "primevue/rating";
 import Panel from "primevue/panel";
@@ -165,12 +172,18 @@ const newReview = ref({});
 const reviews = ref([]);
 const isGalleryFS = ref(false);
 const isDialogOpen = ref(false);
+const isLoading = ref(true);
 
 onMounted(async () => {
   const slug = route.params.slug;
   product.value = await productStore.fetchSingleProduct(slug);
-  reviews.value = await getReviewsForProduct(product.value._id || product.value.id);
+  if (!!product.value) reviews.value = await getReviewsForProduct(product.value._id || product.value.id);
+  isLoading.value = false;
 });
+
+const shouldRender = computed(() => {
+  return !isLoading.value && !!product.value;
+})
 
 const imagesUrls = computed(() => {
   if (Array.isArray(product.value.images)) {
@@ -208,7 +221,7 @@ const rating = computed(() => {
 });
 
 const ratingText = computed(() => {
-  return product?.value.averageRating? product?.value.averageRating.toString() : 'No reviews yet'
+  return product?.value.averageRating ? product?.value.averageRating.toString() : 'No reviews yet'
 })
 
 const hasDiscount = computed(() => {
@@ -228,26 +241,31 @@ const favButtonLabel = computed(() => {
 })
 
 const openDialog = () => {
-  if(!auth.authenticated) return;
+  if (!auth.authenticated) return;
   isDialogOpen.value = true;
 }
 
 const submitReview = async () => {
   console.log(auth.isAuthenticated);
   let hasErrors = false;
-  if(!newReview.value.rating) {
+  if (!newReview.value.rating) {
     toast.add({severity: 'error', detail: 'Please choose a rating.', life: 5000, closable: true});
     hasErrors = true;
   }
-  if(newReview.value.title && newReview.value.title.length < 2 || !newReview.value.title){
+  if (newReview.value.title && newReview.value.title.length < 2 || !newReview.value.title) {
     toast.add({severity: 'error', detail: 'Title must be over 2 characters or none.', life: 5000, closable: true});
     hasErrors = true;
   }
-  if(newReview.value.text && newReview.value.text.length < 2 || !newReview.value.text){
-    toast.add({severity: 'error', detail: 'Description must be over 5 characters or none.', life: 5000, closable: true});
+  if (newReview.value.text && newReview.value.text.length < 2 || !newReview.value.text) {
+    toast.add({
+      severity: 'error',
+      detail: 'Description must be over 5 characters or none.',
+      life: 5000,
+      closable: true
+    });
     hasErrors = true;
   }
-  if(hasErrors) return;
+  if (hasErrors) return;
   await axios
       .post(`/reviews`, {
         ...newReview.value,
@@ -259,27 +277,30 @@ const submitReview = async () => {
         isDialogOpen.value = false;
       })
       .catch((err) => {
-        if(err.error.includes('Duplicate field value entered:'))
+        if (err.error.includes('Duplicate field value entered:'))
           toast.add({severity: 'error', detail: 'You have already reviewed this product.', life: 5000, closable: true})
+        else if (err.error.includes('Not authorized to access this route'))
+          toast.add({
+            severity: 'error',
+            detail: 'You must be logged in to review a product.',
+            life: 5000,
+            closable: true
+          })
         else
-          if (err.error.includes('Not authorized to access this route'))
-            toast.add({severity: 'error', detail: 'You must be logged in to review a product.', life: 5000, closable: true})
-          else
-            toast.add({severity: 'error', detail: 'Something went wrong.', life: 5000, closable: true})
+          toast.add({severity: 'error', detail: 'Something went wrong.', life: 5000, closable: true})
       });
 }
 
 const toggleFavorite = async () => {
   if (!product.value.favorite) {
     const res = await addToFavorite(product.value._id || product.value.id)
-    if(res.success) {
+    if (res.success) {
       productStore.favoritesCount += 1;
       product.value.favorite = true;
     }
-  }
-  else {
+  } else {
     const res = await removeFromFavorites(product.value._id || product.value.id)
-    if(res.success) {
+    if (res.success) {
       productStore.favoritesCount -= 1;
       product.value.favorite = false;
     }
@@ -292,17 +313,30 @@ const addToCart = () => {
 
 </script>
 <style>
-.p-dialog{
+
+#no-product {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1877f2;
+  max-width: 50%;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  height: 90vh;
+  align-items: center;
+}
+
+.p-dialog {
   width: 40%;
 }
 
-.dialog-content-review{
+.dialog-content-review {
   padding: 20px;
   min-width: 250px;
   width: 100%;
 }
 
-.dialog-content-review input, textarea{
+.dialog-content-review input, textarea {
   width: 100%;
 }
 
@@ -348,68 +382,69 @@ const addToCart = () => {
   grid-template-columns: 1fr 1fr;
 }
 
-.product-specifications > span{
+.product-specifications > span {
   padding: 5px;
 }
 
-.even-row{
+.even-row {
   background-color: #f2f2f7;
 }
 
-.review-title{
+.review-title {
   font-size: 1.2em;
   font-weight: 450;
   margin: 0;
 }
 
-.review-text{
+.review-text {
   padding: 0 10px;
 }
 
-.product-info-panels > *{
+.product-info-panels > * {
   padding-top: 10px;
 }
 
-.product-info-panels > *:last-child{
+.product-info-panels > *:last-child {
   padding-bottom: 200px;
 }
 
 @media (max-width: 1380px) {
-  .product-action-buttons{
+  .product-action-buttons {
     flex-direction: column;
     margin: 0;
   }
 
-  .product-action-buttons > *{
+  .product-action-buttons > * {
     width: 100%;
   }
 }
 
 @media (max-width: 992px) {
-  .title-and-stuff{
+  .title-and-stuff {
     width: 50%;
   }
 }
 
 @media (max-width: 600px) {
-  .product-wrapper{
+  .product-wrapper {
     width: 95%;
   }
 
-  .product-hero{
+  .product-hero {
     flex-direction: column;
     height: fit-content;
     max-width: unset;
   }
 
-  .title-and-stuff{
-    width: 100%;
-  }
-  .image-gallery{
+  .title-and-stuff {
     width: 100%;
   }
 
-  .product-action-buttons{
+  .image-gallery {
+    width: 100%;
+  }
+
+  .product-action-buttons {
     padding-top: 2rem;
   }
 }
