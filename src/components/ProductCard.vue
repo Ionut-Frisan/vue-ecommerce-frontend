@@ -287,6 +287,7 @@ a{
   display: flex;
   justify-content: space-between;
   padding: 0 5px 5px 5px;
+  align-items: center;
 }
 
 .p-toast-top-right {
