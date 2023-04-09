@@ -1,6 +1,6 @@
 <template>
   <div class="checkout-wrapper">
-    <form>
+    <form @submit.prevent="handleSubmit">
       <div class="field">
         <label for="firstName">First name</label>
         <InputText
@@ -26,10 +26,19 @@
         />
       </div>
       <div class="field">
-        <label for="country">Country</label>
+        <label for="phone">Phone</label>
         <InputText
-          id="country"
-          v-model="model.country"
+          id="phone"
+          v-model="model.phone_number"
+          required
+          type="tel"
+        />
+      </div>
+      <div class="field">
+        <label for="county">County</label>
+        <InputText
+          id="county"
+          v-model="model.county"
           required
         />
       </div>
@@ -88,8 +97,15 @@ import {ref} from 'vue';
 import InputText from "primevue/inputtext";
 import Checkbox from 'primevue/checkbox';
 import Button from 'primevue/button';
+import axios from "axios";
+import {useToast} from "primevue/usetoast";
+import {useCartStore} from "../stores/cart.js";
 
+const toast = useToast();
+const store = useCartStore()
 const card = ref(true);
+
+const products = ref(store.getCartItems);
 
 const model = ref({
   firstName: "",
@@ -101,6 +117,27 @@ const model = ref({
   email: "",
   payment_type: 'card'
 });
+
+const handleSubmit = async () => {
+  if (!Array.isArray(products.value) || !products.value.length) {
+    toast.add({severity:'error', detail:'Please add products to cart before', life: 5000});
+  }
+  await axios.post('orders', {
+    details: model.value,
+    products: products.value,
+  })
+      .then((res) => {
+        if (res.data.success) {
+          const { url } = res.data.data;
+          if (typeof url === "string" && url.startsWith('https://checkout.stripe.com')) {
+            window.location = url;
+          }
+        }
+      })
+      .catch((err) => {
+        toast.add({severity:'error', detail:'There was an error, please try again.', life: 5000});
+      })
+}
 </script>
 <style scoped>
 .checkout-wrapper{
