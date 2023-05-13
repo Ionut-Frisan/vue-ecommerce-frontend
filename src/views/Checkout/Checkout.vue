@@ -99,7 +99,7 @@ import Checkbox from 'primevue/checkbox';
 import Button from 'primevue/button';
 import axios from "axios";
 import {useToast} from "primevue/usetoast";
-import {useCartStore} from "../stores/cart.js";
+import {useCartStore} from "../../stores/cart";
 
 const toast = useToast();
 const store = useCartStore()
@@ -130,6 +130,8 @@ const handleSubmit = async () => {
         if (res.data.success) {
           const { url } = res.data.data;
           if (typeof url === "string" && url.startsWith('https://checkout.stripe.com')) {
+            // store.clearCart();
+            localStorage.setItem('last_session_id', res.data.data.sessionId);
             window.location = url;
           }
         }

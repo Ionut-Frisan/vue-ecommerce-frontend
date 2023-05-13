@@ -18,6 +18,7 @@ const routes = [
     path: "/admin-panel",
     name: "Dashboard",
     component: () => import("../views/Admin/Dashboard.vue"),
+    meta: {requiresAuth: true, requiresAdmin: true},
     children: [
       {
         path: "products",
@@ -32,7 +33,6 @@ const routes = [
         component: () => import("../views/Admin/Config.vue"),
       },
     ],
-    meta: {requiresAuth: true, requiresAdmin: true}
   },
   {
     path: '/',
@@ -56,12 +56,27 @@ const routes = [
   {
     path: '/checkout',
     name: 'Checkout',
-    component: () => import('../views/Checkout.vue')
+    component: () => import('../views/Checkout/Checkout.vue')
   },
   {
     path: '/product/:slug',
     name: 'Product',
     component: () => import('../views/Product.vue')
+  },
+  {
+    path: '/success',
+    name: 'Success',
+    component: () => import('../views/Checkout/Success.vue')
+  },
+  {
+    path: '/orders',
+    name: 'Orders',
+    component: () => import('../views/Orders.vue')
+  },
+  {
+    path: '/order/:id',
+    name: 'Order',
+    component: () => import('../views/Order.vue')
   }
 ];
 
