@@ -17,9 +17,15 @@ import ToastService from "primevue/toastservice";
 import ConfirmationService from 'primevue/confirmationservice';
 import Tooltip from 'primevue/tooltip';
 
+import { OhVueIcon } from "oh-vue-icons";
+
 import { createPinia } from 'pinia';
 import router from "./router/index";
 import axios from "axios";
+
+import {importIcons} from "./utils/icon-imports.js";
+
+importIcons();
 
 axios.defaults.baseURL = "http://127.0.0.1:5000/api/v1";
 
@@ -31,7 +37,8 @@ app.directive("badge", BadgeDirective);
 
 app.component("InputText", InputText);
 app.component("PanelMenu", PanelMenu);
-app.directive('tooltip', Tooltip);
+app.component('VIcon', OhVueIcon);
+app.directive("tooltip", Tooltip);
 app.config.devtools = true;
 
 app.mount("#app");

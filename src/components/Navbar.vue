@@ -1,7 +1,9 @@
 <template>
   <nav class="navbar">
     <p class="navbar-branding">
-      <router-link to="/"> Whynot </router-link>
+      <router-link to="/">
+        Whynot
+      </router-link>
     </p>
     <form
       :class="[{ 'is-not-open': !showMobile }, 'search-input-wrapper']"
@@ -17,7 +19,10 @@
         />
       </span>
     </form>
-    <ul class="nav-items" :class="{ 'is-not-open': !showMobile }">
+    <ul
+      class="nav-items"
+      :class="{ 'is-not-open': !showMobile }"
+    >
       <li class="nav-item">
         <Button
           label="Cart"
@@ -49,7 +54,10 @@
         />
       </li>
     </ul>
-    <i class="pi pi-bars hamburger" @click="toggleMobile" />
+    <i
+      class="pi pi-bars hamburger"
+      @click="toggleMobile"
+    />
   </nav>
 </template>
 
@@ -83,32 +91,37 @@ const computedItems = computed(() => {
     {
       label: "Settings",
       icon: "pi pi-cog",
-      to: "/",
-    },
+      to: "/"
+    }
   ];
   if (auth.isAuthenticated && auth.isAdmin) {
     items.push({
       label: "Admin",
       icon: "pi pi-user-edit",
-      to: "/admin-panel",
+      to: "/admin-panel"
     });
   }
   if (!auth.isAuthenticated) {
     items.push({
       label: "Sign in",
       icon: "pi pi-sign-in",
-      to: "/login",
+      to: "/login"
     });
     items.push({
       label: "Register",
       icon: "pi pi-user-plus",
-      to: "/sign-up",
+      to: "/sign-up"
     });
   } else {
     items.push({
+        label: "My orders",
+        icon: "pi pi-check-square",
+        to: "/orders"
+    });
+    items.push({
       label: "Sign out",
       icon: "pi pi-sign-out",
-      to: "/sign-out",
+      to: "/sign-out"
     });
   }
   return items;

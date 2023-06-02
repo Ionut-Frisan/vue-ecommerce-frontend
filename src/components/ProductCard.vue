@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-cloak="">
+  <div class="card">
     <div class="card-top">
       <router-link :to="`product/${product?.slug}`">
         <img
