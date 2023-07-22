@@ -45,6 +45,10 @@ const props = defineProps({
     count: {
         type: Number,
         default: 0,
+    },
+    showAddButton: {
+        type: Boolean,
+        default: false,
     }
 })
 
@@ -100,8 +104,6 @@ const hasDiscount = computed(() => {
 const isFavoritesButtonHovered = ref(false);
 
 const favoritesButtonClasses = computed(() => {
-    // TODO: add danger class if product is in favorites list
-    // TODO: maybe disable it if user is not logged in
     let classes = 'p-button-rounded product-card-favorites-button p-button-lg'
     if (isFavoritesButtonHovered.value) {
         if (!props.product.favorite)

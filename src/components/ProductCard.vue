@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import {ref, defineProps, computed} from "vue";
+import {ref, defineProps, defineEmits, computed} from "vue";
 
 import Rating from "primevue/rating";
 import Button from "primevue/button";
@@ -60,6 +60,8 @@ const props = defineProps({
   },
   authenticated: Boolean,
 })
+
+const emits = defineEmits(["toggleFavorite"]);
 
 const productStore = useProductStore();
 
@@ -145,6 +147,7 @@ const toggleFavorite = async () => {
     if(res.success) {
       productStore.favoritesCount += 1;
       productStore.setFavoriteValue(props.product._id || props.product.id, true)
+      emits("toggleFavorite", { id: props.product._id, newValue: true });
     }
   }
   else {
@@ -152,6 +155,7 @@ const toggleFavorite = async () => {
     if(res.success) {
       productStore.favoritesCount -= 1;
       productStore.setFavoriteValue(props.product._id || props.product.id, false)
+      emits("toggleFavorite", { id: props.product._id, newValue: false });
     }
   }
 }
