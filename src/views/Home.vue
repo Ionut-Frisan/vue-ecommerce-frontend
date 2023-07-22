@@ -55,6 +55,7 @@ onMounted(() => {
 })
 
 watch(() => route.fullPath, (newValue, oldValue) => {
+  if (!['Search', 'Home'].includes(route.name)) return;
   getProductsWithQuery();
 })
 
