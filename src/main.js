@@ -27,7 +27,7 @@ import {importIcons} from "./utils/icon-imports.js";
 
 importIcons();
 
-axios.defaults.baseURL = "http://127.0.0.1:5000/api/v1";
+axios.defaults.baseURL = "https://urchin-app-xyh7n.ondigitalocean.app/api/v1";
 
 const app = createApp(App);
 const pinia = createPinia();
