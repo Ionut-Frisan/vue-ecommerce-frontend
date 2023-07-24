@@ -78,7 +78,8 @@ const items = ref([
       {
         key: "1_0",
         label: "All",
-        icon: "pi pi-fw pi-list"
+        icon: "pi pi-fw pi-list",
+        to: "/admin-panel/orders"
       },
       {
         key: "1_1",

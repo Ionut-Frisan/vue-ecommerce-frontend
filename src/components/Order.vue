@@ -25,19 +25,10 @@ import {computed} from "vue";
 import Button from "primevue/button";
 import {useToast} from "primevue/usetoast";
 import {isValidDate} from "../utils/helpers.js";
+import {statusLabels} from "../utils/constants.js";
 
 const toast = useToast();
 
-const statusLabels = {
-    "waitingForPayment": "Waiting for payment",
-    "paymentCompleted": "Payment completed",
-    "orderAccepted": "Order accepted",
-    "inProgress": "In progress",
-    "delivering": "Delivering",
-    "completed": "Completed",
-    "cancelled": "Cancelled",
-    "paymentRejected": "Payment rejected"
-}
 const props = defineProps({
     order: {
         type: Object,

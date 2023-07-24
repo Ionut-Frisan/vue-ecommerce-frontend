@@ -55,19 +55,10 @@ import axios from "axios";
 import OrderHistory from "../components/OrderHistory.vue";
 import {isValidDate} from "../utils/helpers.js";
 
+import {statusLabels} from "../utils/constants.js";
+
 const route = useRoute();
 const order = ref({});
-
-const statusLabels = {
-    "waitingForPayment": "Waiting for payment",
-    "paymentCompleted": "Payment completed",
-    "orderAccepted": "Order accepted",
-    "inProgress": "In progress",
-    "delivering": "Delivering",
-    "completed": "Completed",
-    "cancelled": "Cancelled",
-    "paymentRejected": "Payment rejected"
-}
 
 onMounted(async () => {
     const id = route.params.id;
