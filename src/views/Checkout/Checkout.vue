@@ -124,7 +124,7 @@ const handleSubmit = async () => {
   }
   await axios.post('orders', {
     details: model.value,
-    products: products.value,
+    products: products.value
   })
       .then((res) => {
         if (res.data.success) {

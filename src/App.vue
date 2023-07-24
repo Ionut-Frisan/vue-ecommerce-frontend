@@ -50,7 +50,7 @@ axios.interceptors.response.use((response) => {
 </script>
 
 <template>
-  <Navbar/>
+  <Navbar />
   <Loader />
   <RouterView />
   <Toast />

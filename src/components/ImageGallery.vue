@@ -35,7 +35,10 @@
         >
       </span>
     </div>
-    <span v-if="fullScreen" class="close-button">
+    <span
+      v-if="fullScreen"
+      class="close-button"
+    >
       <Button
         icon="pi pi-times"
         class="p-button-rounded p-button-danger p-button-outlined"

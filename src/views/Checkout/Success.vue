@@ -2,8 +2,8 @@
   <div> asd </div>
 </template>
 <script setup>
-import {useRoute} from "vue-router";
-import {useRouter} from "vue-router";
+import {useRoute,useRouter} from "vue-router";
+
 const route = useRoute();
 const router = useRouter();
 

@@ -9,118 +9,118 @@
       </p>
     </div>
     <form
-        class="form-content"
-        @submit.prevent="onSubmit"
+      class="form-content"
+      @submit.prevent="onSubmit"
     >
       <div class="name">
         <InputText
-            v-model="data.fname"
-            :class="[{ 'input-error': errors?.fname?.length },'input-credentials', 'p-inputtext-lg', 'single-line-inputs']"
-            type="text"
-            placeholder="First name"
-            name="fname"
-            @blur="validateSingleField('fname')"
+          v-model="data.fname"
+          :class="[{ 'input-error': errors?.fname?.length },'input-credentials', 'p-inputtext-lg', 'single-line-inputs']"
+          type="text"
+          placeholder="First name"
+          name="fname"
+          @blur="validateSingleField('fname')"
         />
         <InputText
-            v-model="data.lname"
-            :class="[{ 'input-error': errors?.lname?.length },'input-credentials', 'p-inputtext-lg', 'single-line-inputs']"
-            type="text"
-            placeholder="Last name"
-            name="lname"
-            @blur="validateSingleField('lname')"
+          v-model="data.lname"
+          :class="[{ 'input-error': errors?.lname?.length },'input-credentials', 'p-inputtext-lg', 'single-line-inputs']"
+          type="text"
+          placeholder="Last name"
+          name="lname"
+          @blur="validateSingleField('lname')"
         />
       </div>
       <ul class="errors">
         <li
-            v-for="err in errors?.fname?.concat(errors?.lname)"
-            class="error-message"
+          v-for="err in errors?.fname?.concat(errors?.lname)"
+          class="error-message"
         >
           {{ err }}
         </li>
       </ul>
       <InputText
-          v-model="data.email"
-          :class="[{ 'input-error': errors?.email?.length },'input-credentials', 'p-inputtext-lg']"
-          type="text"
-          placeholder="Email"
-          name="email"
-          @blur="validateSingleField('email')"
+        v-model="data.email"
+        :class="[{ 'input-error': errors?.email?.length },'input-credentials', 'p-inputtext-lg']"
+        type="text"
+        placeholder="Email"
+        name="email"
+        @blur="validateSingleField('email')"
       />
       <ul class="errors">
         <li
-            v-for="err in errors?.email"
-            class="error-message"
+          v-for="err in errors?.email"
+          class="error-message"
         >
           {{ err.charAt(0).toUpperCase() + err.slice(1) }}
         </li>
       </ul>
       <span class="p-input-icon-right">
         <i
-            class="pi"
-            :class="{
+          class="pi"
+          :class="{
             'pi-eye': showPassword,
             'pi-eye-slash': !showPassword,
           }"
-            @click="togglePassType"
+          @click="togglePassType"
         />
         <InputText
-            v-model="data.password"
-            :type="passType"
-            placeholder="Password"
-            :class="[{ 'input-error': errors?.password?.length },'input-credentials', 'p-inputtext-lg']"
-            @blur="validateSingleField('password')"
+          v-model="data.password"
+          :type="passType"
+          placeholder="Password"
+          :class="[{ 'input-error': errors?.password?.length },'input-credentials', 'p-inputtext-lg']"
+          @blur="validateSingleField('password')"
         />
       </span>
       <ul class="errors">
         <li
-            v-for="err in errors?.password"
-            class="error-message"
+          v-for="err in errors?.password"
+          class="error-message"
         >
           {{ err.charAt(0).toUpperCase() + err.slice(1) }}
         </li>
       </ul>
       <span class="p-input-icon-right">
         <i
-            class="pi"
-            :class="{
+          class="pi"
+          :class="{
             'pi-eye': showPassword,
             'pi-eye-slash': !showPassword,
           }"
-            @click="togglePassType"
+          @click="togglePassType"
         />
         <InputText
-            v-model="data.repeatPassword"
-            :type="passType"
-            placeholder="Confirm password"
-            :class="[{ 'input-error': errors?.repeatPassword?.length },'input-credentials', 'p-inputtext-lg']"
-            @blur="validateSingleField('repeatPassword')"
+          v-model="data.repeatPassword"
+          :type="passType"
+          placeholder="Confirm password"
+          :class="[{ 'input-error': errors?.repeatPassword?.length },'input-credentials', 'p-inputtext-lg']"
+          @blur="validateSingleField('repeatPassword')"
         />
       </span>
       <ul class="errors">
         <li
-            v-for="err in errors?.repeatPassword"
-            class="error-message"
+          v-for="err in errors?.repeatPassword"
+          class="error-message"
         >
           {{ err.charAt(0).toUpperCase() + err.slice(1) }}
         </li>
       </ul>
-<!--      <p v-if="responseErrors.length">-->
-<!--        <Message-->
-<!--            v-for="(err, index) in responseErrors"-->
-<!--            :key="err+index"-->
-<!--            severity="error">-->
-<!--          {{ err }}-->
-<!--        </Message>-->
-<!--      </p>-->
+      <!--      <p v-if="responseErrors.length">-->
+      <!--        <Message-->
+      <!--            v-for="(err, index) in responseErrors"-->
+      <!--            :key="err+index"-->
+      <!--            severity="error">-->
+      <!--          {{ err }}-->
+      <!--        </Message>-->
+      <!--      </p>-->
       <Button
-          label="Sign up"
-          class="p-button-success pb-10"
-          type="submit"
+        label="Sign up"
+        class="p-button-success pb-10"
+        type="submit"
       />
-      <span class="divider"/>
+      <span class="divider" />
       <RouterLink
-          to="/reset-password"
-          class="forgot-password"
+        to="/reset-password"
+        class="forgot-password"
       >
         Already have an account? Log in
       </RouterLink>

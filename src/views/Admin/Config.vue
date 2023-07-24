@@ -1,7 +1,5 @@
 <template>
-  <div class="">
-
-  </div>
+  <div class="" />
 </template>
 <script setup>
 // TODO: admin config

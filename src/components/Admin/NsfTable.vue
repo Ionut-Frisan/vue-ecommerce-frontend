@@ -6,9 +6,12 @@
           <Checkbox
             v-model="selectAll"
             :binary="true"
-          ></Checkbox>
+          />
         </td>
-        <td v-for="field in model" :key="field+'-key'">
+        <td
+          v-for="field in model"
+          :key="field+'-key'"
+        >
           {{ field }}
         </td>
         <td style="width: 100px">
@@ -21,8 +24,8 @@
       >
         <td>
           <Checkbox
-            :value="obj._id || obj.id"
             v-model="bulkSelected"
+            :value="obj._id || obj.id"
           />
         </td>
         <td

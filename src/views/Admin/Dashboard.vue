@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
-    <Sidebar></Sidebar>
-    <RouterView class="content"></RouterView>
+    <Sidebar />
+    <RouterView class="content" />
   </div>
 </template>
 
