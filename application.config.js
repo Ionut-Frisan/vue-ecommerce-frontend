@@ -1,6 +1,6 @@
 
 const backendUrl = import.meta.env.PROD
-        ? 'https://express-ecommerce-backend.vercel.app/'
+        ? 'https://urchin-app-xyh7n.ondigitalocean.app'
         : 'http://localhost:5000';
 
 const restApiVersion = 'v1';
