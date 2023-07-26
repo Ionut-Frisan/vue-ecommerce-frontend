@@ -354,7 +354,7 @@ const getImageUrl = (images) => {
       return `${uploadsUrl}/${images[0]}`
     return `${uploadsUrl}/no-photo.jpeg`
   }
-  return ${uploadsUrl}/${images}`
+  return `${uploadsUrl}/${images}`;
 }
 
 // queries
