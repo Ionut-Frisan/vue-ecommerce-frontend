@@ -5,7 +5,7 @@ const backendUrl = import.meta.env.PROD
 
 const restApiVersion = 'v1';
 const restApiPath = `api/${restApiVersion}`;
-const uploadsPath = '/uploads';
+const uploadsPath = 'uploads';
 
 const apiUrl = `${backendUrl}/${restApiPath}`;
 const uploadsUrl = `${backendUrl}/${uploadsPath}`;
