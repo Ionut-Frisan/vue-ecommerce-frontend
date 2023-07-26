@@ -251,6 +251,7 @@
 <script setup>
 import {ref, onMounted, computed, watch} from "vue";
 import { useToast } from "primevue/usetoast";
+import {config} from "../../../application.config.js";
 
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
@@ -264,6 +265,8 @@ import Dropdown from "primevue/dropdown";
 import AddUpdateProduct from "../../components/Admin/AddUpdateProduct.vue";
 
 import axios from "axios";
+
+const {uploadsUrl} = config;
 
 // toasts
 const toast = useToast();
@@ -348,10 +351,10 @@ const deleteSelectedProducts = () => {
 const getImageUrl = (images) => {
   if(Array.isArray(images)){
     if(images.length)
-      return `http://localhost:5000/uploads/${images[0]}`
-    return `http://localhost:5000/uploads/no-photo.jpeg`
+      return `${uploadsUrl}/${images[0]}`
+    return `${uploadsUrl}/no-photo.jpeg`
   }
-  return `http://localhost:5000/uploads/${images}`
+  return ${uploadsUrl}/${images}`
 }
 
 // queries

@@ -43,6 +43,7 @@
 
 <script setup>
 import {ref, defineProps, defineEmits, computed} from "vue";
+import {config} from "../../application.config.js";
 
 import Rating from "primevue/rating";
 import Button from "primevue/button";
@@ -52,6 +53,8 @@ import {useToast} from "primevue/usetoast";
 import {useCartStore} from "../stores/cart.js";
 import {useProductStore} from "../stores/product.js";
 import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite.js";
+
+const { uploadsUrl } = config;
 
 const props = defineProps({
   product: {
@@ -68,10 +71,10 @@ const productStore = useProductStore();
 const imageUrl = computed(() => {
   if (Array.isArray(props.product.images)) {
     if (props.product.images.length)
-      return `http://localhost:5000/uploads/${props.product.images[0]}`
-    return `http://localhost:5000/uploads/no-photo.jpeg`
+      return `${uploadsUrl}/${props.product.images[0]}`
+    return `${uploadsUrl}/no-photo.jpeg`
   }
-  return `http://localhost:5000/uploads/${props.product.images}`
+  return `${uploadsUrl}/${props.product.images}`
 })
 
 const rating = computed(() => {

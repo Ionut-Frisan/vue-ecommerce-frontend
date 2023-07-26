@@ -35,12 +35,15 @@ onMounted(async () => {
 
 axios.interceptors.request.use((config) => {
   product.isLoading = true;
+  product.addLoader(config.baseURL);
   return config;
 })
 axios.interceptors.response.use((response) => {
   product.isLoading = false;
+  product.clearLoader(response.config.baseURL);
   return response;
 }, (error) => {
+  product.clearLoader(error.response.config.baseURL);
   product.isLoading = false;
   if (error.response && error.response.data) {
     return Promise.reject(error.response.data);

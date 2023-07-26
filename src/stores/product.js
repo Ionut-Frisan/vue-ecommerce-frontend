@@ -8,6 +8,7 @@ export const useProductStore = defineStore('products', {
     limitOptions: [20, 30, 50],
     isLoading: false,
     favoritesCount: 0,
+    loaders: [],
   }),
   getters: {
     getLimit() {
@@ -25,6 +26,9 @@ export const useProductStore = defineStore('products', {
     isEmpty(){
       return this.data?.data.length === 0
     },
+    getLoadStatus() {
+      return this.loaders.length > 0;
+    },
     getQueryParams: (state) => (page, query) => {
       let pageValue = page?.value || page || 1;
       const asString = `?page=${pageValue}&limit=${state.limit}&keyword=${query}`;
@@ -37,6 +41,14 @@ export const useProductStore = defineStore('products', {
     }
   },
   actions: {
+    addLoader(url) {
+      this.loaders.push(url);
+    },
+    clearLoader(url) {
+      const index = this.loaders.indexOf(url);
+      if(index !== -1) this.loaders.splice(index, 1);
+      console.log(this.loaders);
+    },
     setLimit(value) {
       if (this.limitOptions.indexOf(value) > -1) {
         this.limit = value;

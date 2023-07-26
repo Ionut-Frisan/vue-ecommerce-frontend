@@ -49,9 +49,10 @@
 </template>
 <script setup>
 import {computed, ref} from 'vue';
-
+import {config} from "../../application.config.js";
 import Button from "primevue/button";
 
+const { uploadsUrl } = config;
 const emits = defineEmits(['closeGallery'])
 
 const props = defineProps({
@@ -73,7 +74,7 @@ const props = defineProps({
 const selectedIndex = ref(props.startIndex);
 
 const selected = computed(() => {
-  if (!props.source) return {src: 'http://localhost:5000/uploads/no-photo.jpeg'};
+  if (!props.source) return {src: `${uploadsUrl}/no-photo.jpeg`};
   return props.source[selectedIndex.value] || props.source[0];
 })
 

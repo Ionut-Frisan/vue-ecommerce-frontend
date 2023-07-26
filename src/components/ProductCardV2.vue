@@ -57,10 +57,10 @@ const productStore = useProductStore();
 const imageUrl = computed(() => {
     if (Array.isArray(props.product.images)) {
         if (props.product.images.length)
-            return `http://localhost:5000/uploads/${props.product.images[0]}`
-        return `http://localhost:5000/uploads/no-photo.jpeg`
+            return `${uploadsUrl}/${props.product.images[0]}`
+        return `${uploadsUrl}/no-photo.jpeg`
     }
-    return `http://localhost:5000/uploads/${props.product.images}`
+    return `${uploadsUrl}/${props.product.images}`
 })
 
 const rating = computed(() => {

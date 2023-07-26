@@ -25,9 +25,11 @@ import axios from "axios";
 
 import {importIcons} from "./utils/icon-imports.js";
 
+import {config} from "../application.config.js";
+
 importIcons();
 
-axios.defaults.baseURL = "https://urchin-app-xyh7n.ondigitalocean.app/api/v1";
+axios.defaults.baseURL = config.apiUrl;
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -40,5 +42,6 @@ app.component("PanelMenu", PanelMenu);
 app.component('VIcon', OhVueIcon);
 app.directive("tooltip", Tooltip);
 app.config.devtools = true;
+app.config.globalProperties.test = 'asd';
 
 app.mount("#app");

@@ -44,11 +44,14 @@
 </template>
 <script setup>
 import {computed, defineProps, ref} from "vue";
+import {config} from "../../application.config.js";
+
+const {uploadsUrl} = config;
 
 const props = defineProps({
   images: {
     type: Array,
-    default: () => ['http://localhost:5000/uploads/untitled.png', 'http://localhost:5000/uploads/photo_62d74d00179c207ca8c1d012.jpg', 'http://localhost:5000/uploads/no-photo.jpeg', 'http://localhost:5000/uploads/photo_62d74d00179c207ca8c1d012.jpg', 'http://localhost:5000/uploads/no-photo.jpeg', 'http://localhost:5000/uploads/photo_62e17cd5cbc4c9037628b06b.webp', 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg']
+    default: () => []
   },
   customClass: {
     type: String,

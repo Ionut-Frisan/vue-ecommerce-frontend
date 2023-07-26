@@ -148,6 +148,7 @@ import {useRoute} from "vue-router";
 import {useProductStore} from "../stores/product.js";
 import {useAuthStore} from "../stores/auth.js";
 import {useCartStore} from "../stores/cart.js";
+import {config} from "../../application.config.js";
 import Button from "primevue/button";
 import Rating from "primevue/rating";
 import Panel from "primevue/panel";
@@ -160,6 +161,8 @@ import ImageGallery from "../components/ImageGallery.vue";
 
 import {getReviewsForProduct} from "../managers/RequestManagers/review.js";
 import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite.js";
+
+const {uploadsUrl} = config;
 
 const route = useRoute();
 const productStore = useProductStore();
@@ -189,12 +192,12 @@ const imagesUrls = computed(() => {
   if (Array.isArray(product.value.images)) {
     if (product.value.images.length) {
       return product.value.images.map((img) => {
-        return {src: `http://localhost:5000/uploads/${img}`};
+        return {src: `${uploadsUrl}/${img}`};
       });
     }
-    return [{src: `http://localhost:5000/uploads/no-photo.jpeg`}];
+    return [{src: `${uploadsUrl}/no-photo.jpeg`}];
   }
-  return [{src: `http://localhost:5000/uploads/${product.value.images}`}];
+  return [{src: `${uploadsUrl}/${product.value.images}`}];
 });
 
 const computedTitle = computed(() => product.value?.name?.toUpperCase() || "");
