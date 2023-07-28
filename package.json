@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "update-version": "npm version patch && git push",
+    "update-version-minor": "npm version minor && git push",
+    "update-version-major": "npm version major && git push"
   },
   "dependencies": {
     "@vuelidate/core": "^2.0.0-alpha.42",
