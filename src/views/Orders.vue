@@ -14,6 +14,7 @@ import {useAuthStore} from "../stores/auth.js";
 import {ref, onMounted} from "vue";
 import axios from "axios";
 import Order from "../components/Order.vue";
+import {setPageTitle} from "../utils/helpers.js";
 
 const authStore = useAuthStore();
 
@@ -22,6 +23,7 @@ const authenticated = (authStore.isAuthenticated);
 const orders = ref([]);
 
 onMounted(async () => {
+  setPageTitle('Orders');
   if (authenticated) {
     const res = await axios.get('/orders/me');
     const data = res.data;

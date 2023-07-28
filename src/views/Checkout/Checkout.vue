@@ -92,7 +92,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 
 import InputText from "primevue/inputtext";
 import Checkbox from 'primevue/checkbox';
@@ -100,6 +100,7 @@ import Button from 'primevue/button';
 import axios from "axios";
 import {useToast} from "primevue/usetoast";
 import {useCartStore} from "../../stores/cart";
+import {setPageTitle} from "../../utils/helpers.js";
 
 const toast = useToast();
 const store = useCartStore()
@@ -117,6 +118,10 @@ const model = ref({
   email: "",
   payment_type: 'card'
 });
+
+onMounted(() => {
+    setPageTitle('Checkout');
+})
 
 const handleSubmit = async () => {
   if (!Array.isArray(products.value) || !products.value.length) {

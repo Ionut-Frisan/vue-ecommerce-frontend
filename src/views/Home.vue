@@ -30,6 +30,7 @@ import Paginator from 'primevue/paginator';
 import {useToast} from "primevue/usetoast";
 import {useProductStore} from "../stores/product.js";
 import {useAuthStore} from "../stores/auth.js";
+import {setPageTitle} from "../utils/helpers.js";
 
 
 const route = useRoute();
@@ -52,6 +53,7 @@ const page = ref(1);
 
 onMounted(() => {
   getProductsWithQuery();
+  setPageTitle('Home');
 })
 
 watch(() => route.fullPath, (newValue, oldValue) => {

@@ -19,6 +19,7 @@ import ProductCard from '../components/ProductCard.vue';
 import {onMounted, ref} from "vue";
 import {useAuthStore} from "../stores/auth.js";
 import {getMyFavorites} from "../managers/RequestManagers/favorite.js";
+import {setPageTitle} from "../utils/helpers.js";
 
 
 const authStore = useAuthStore();
@@ -26,6 +27,7 @@ const authStore = useAuthStore();
 const products = ref([]);
 
 onMounted(async () => {
+    setPageTitle('Favorites');
     const response = await getMyFavorites();
     products.value = response || [];
 })

@@ -85,9 +85,11 @@ import CartItem from "../components/CartItem.vue";
 import {getFormattedPrice} from '../utils/price.js'
 import Button from "primevue/button";
 import axios from "axios";
+import {setPageTitle} from "../utils/helpers.js";
 
 onBeforeMount(async () => {
   await getCartPriceBackend();
+  setPageTitle('Cart')
 })
 
 const cart = useCartStore();

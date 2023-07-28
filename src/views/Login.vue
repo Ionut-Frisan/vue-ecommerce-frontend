@@ -59,11 +59,12 @@
 
 <script setup>
 import { useAuthStore } from "../stores/auth.js";
-import { ref, computed } from "vue";
+import {ref, computed, onMounted} from "vue";
 import { useRouter } from 'vue-router';
 import axios from "axios";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
+import {setPageTitle} from "../utils/helpers.js";
 
 const auth = useAuthStore();
 const router = useRouter();
@@ -71,6 +72,10 @@ const router = useRouter();
 const email = ref("");
 const password = ref("");
 const showPassword = ref(false);
+
+onMounted(() => {
+    setPageTitle('Log in');
+})
 
 const passType = computed(() => {
   return showPassword.value ? "text" : "password";

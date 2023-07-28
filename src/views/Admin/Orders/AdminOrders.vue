@@ -121,12 +121,14 @@ import Tag from "primevue/tag";
 import DataTable from "primevue/datatable";
 import {getOrders} from "../../../managers/RequestManagers/orders.js";
 import {statusLabels, statusIcons, statusSeverity} from "../../../utils/constants.js";
+import {setAdminPageTitle} from "../../../utils/helpers.js";
 
 const orders = ref([]);
 const selectedOrders = ref([]);
 const expandedRows = ref([]);
 
 onMounted(async () => {
+  setAdminPageTitle('Orders');
   orders.value = await getOrders();
 })
 

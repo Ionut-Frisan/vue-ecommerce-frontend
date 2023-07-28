@@ -53,7 +53,7 @@ import {ref, computed, onMounted} from "vue";
 import axios from "axios";
 
 import OrderHistory from "../components/OrderHistory.vue";
-import {isValidDate} from "../utils/helpers.js";
+import {isValidDate, setPageTitle} from "../utils/helpers.js";
 
 import {statusLabels} from "../utils/constants.js";
 
@@ -62,6 +62,7 @@ const order = ref({});
 
 onMounted(async () => {
     const id = route.params.id;
+    setPageTitle(`Order ${id}`);
     const res = await axios.get(`/orders/${id}`);
     order.value = res.data?.data || {};
 })

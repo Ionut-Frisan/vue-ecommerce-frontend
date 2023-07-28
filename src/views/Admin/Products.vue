@@ -265,6 +265,7 @@ import Dropdown from "primevue/dropdown";
 import AddUpdateProduct from "../../components/Admin/AddUpdateProduct.vue";
 
 import axios from "axios";
+import {setAdminPageTitle} from "../../utils/helpers.js";
 
 const {uploadsUrl} = config;
 
@@ -273,6 +274,7 @@ const toast = useToast();
 
 // lifecycle hooks
 onMounted(async () => {
+  setAdminPageTitle('Products');
   await axios
       .get(`/products${query.value}`)
       .then((res) => {

@@ -161,6 +161,7 @@ import ImageGallery from "../components/ImageGallery.vue";
 
 import {getReviewsForProduct} from "../managers/RequestManagers/review.js";
 import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite.js";
+import {setPageTitle} from "../utils/helpers.js";
 
 const {uploadsUrl} = config;
 
@@ -182,6 +183,7 @@ onMounted(async () => {
   product.value = await productStore.fetchSingleProduct(slug);
   if (!!product.value) reviews.value = await getReviewsForProduct(product.value._id || product.value.id);
   isLoading.value = false;
+  setPageTitle(!!product.value ? `${product.value.name}` : `Product`);
 });
 
 const shouldRender = computed(() => {

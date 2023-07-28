@@ -130,7 +130,7 @@
 
 <script setup>
 import {useAuthStore} from "../stores/auth.js";
-import {ref, computed} from "vue";
+import {ref, computed, onMounted} from "vue";
 import {useRouter} from 'vue-router';
 import {useToast} from "primevue/usetoast";
 import axios from "axios";
@@ -139,6 +139,7 @@ import Button from "primevue/button";
 import Message from 'primevue/message';
 
 import validateObject from '../validations/GenericValidations.js';
+import {setPageTitle} from "../utils/helpers.js";
 
 const auth = useAuthStore();
 const router = useRouter();
@@ -165,6 +166,10 @@ const rules = {
 }
 
 const responseErrors = ref([]);
+
+onMounted(() => {
+    setPageTitle('Create new account');
+})
 
 const validateSingleField = (field) => {
   const rule = {};
