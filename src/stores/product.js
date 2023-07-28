@@ -47,7 +47,6 @@ export const useProductStore = defineStore('products', {
     clearLoader(url) {
       const index = this.loaders.indexOf(url);
       if(index !== -1) this.loaders.splice(index, 1);
-      console.log(this.loaders);
     },
     setLimit(value) {
       if (this.limitOptions.indexOf(value) > -1) {

@@ -17,5 +17,7 @@ import Sidebar from "../../components/Admin/Sidebar.vue";
 .content {
   width: 100% !important;
   padding: 50px;
+  background-color: #fff;
+  min-height: calc(100vh - 60px);
 }
 </style>

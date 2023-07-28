@@ -57,7 +57,7 @@
         >
           <template #body="slotProps">
             <span>
-              {{slotProps.data.price / 100}}
+                <router-link :to="`/admin-panel/orders/${slotProps.data.id}`" >{{slotProps.data.price}} </router-link>
             </span>
           </template>
         </Column>
