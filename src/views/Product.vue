@@ -161,7 +161,7 @@ import ImageGallery from "../components/ImageGallery.vue";
 
 import {getReviewsForProduct} from "../managers/RequestManagers/review.js";
 import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite.js";
-import {setPageTitle} from "../utils/helpers.js";
+import {getImageUrl, setPageTitle} from "../utils/helpers.js";
 
 const {uploadsUrl} = config;
 
@@ -190,17 +190,7 @@ const shouldRender = computed(() => {
   return !isLoading.value && !!product.value;
 })
 
-const imagesUrls = computed(() => {
-  if (Array.isArray(product.value.images)) {
-    if (product.value.images.length) {
-      return product.value.images.map((img) => {
-        return {src: `${uploadsUrl}/${img}`};
-      });
-    }
-    return [{src: `${uploadsUrl}/no-photo.jpeg`}];
-  }
-  return [{src: `${uploadsUrl}/${product.value.images}`}];
-});
+const imagesUrls = computed(() => (product.value.imageUrls || []).map(url => ({src: url})));
 
 const computedTitle = computed(() => product.value?.name?.toUpperCase() || "");
 

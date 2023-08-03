@@ -53,6 +53,7 @@ import {useToast} from "primevue/usetoast";
 import {useCartStore} from "../stores/cart.js";
 import {useProductStore} from "../stores/product.js";
 import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite.js";
+import {getImageUrl} from "../utils/helpers.js";
 
 const { uploadsUrl } = config;
 
@@ -69,13 +70,9 @@ const emits = defineEmits(["toggleFavorite"]);
 const productStore = useProductStore();
 
 const imageUrl = computed(() => {
-  if (Array.isArray(props.product.images)) {
-    if (props.product.images.length)
-      return `${uploadsUrl}/${props.product.images[0]}`
-    return `${uploadsUrl}/no-photo.jpeg`
-  }
-  return `${uploadsUrl}/${props.product.images}`
-})
+    const res = getImageUrl(props.product);
+    return Array.isArray(res) ? res[0] : res;
+});
 
 const rating = computed(() => {
   return props.product?.averageRating ? props.product?.averageRating.toString() : 'No reviews yet';

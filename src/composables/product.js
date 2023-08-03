@@ -1,27 +1,13 @@
 import { ref, computed } from 'vue';
 import {config} from "../../application.config.js";
+import {getImageUrl as getImageUrlFromProduct } from "../utils/helpers.js";
 
 export function useProduct(product) {
   const {uploadsUrl} = config;
   const prod = ref({...product});
-  const getImageUrl = () => {
-    if (Array.isArray(prod.value.images)) {
-      if (prod.value.images.length)
-        return `${uploadsUrl}/${prod.value.images[0]}`
-      return `${uploadsUrl}/no-photo.jpeg`
-    }
-    return `${uploadsUrl}/${prod.value.images}`
-  }
+  const getImageUrl = () => getImageUrlFromProduct(prod);
 
-  const getAllImagesUrl = () => {
-    if(Array.isArray(prod.value.images)){
-      if (prod.value.images.length){
-        return prod.value.images.map((img) => `${uploadsUrl}/${img}`)
-      }
-      return [`${uploadsUrl}/no-photo.jpeg`]
-    }
-    return `${uploadsUrl}/${prod.value.images}`
-  }
+  const getAllImagesUrl = () => getImageUrlFromProduct(prod)
 
   const computedPrice = computed(() => {
     return prod.value.price * (1 - prod.value.discount / 100);

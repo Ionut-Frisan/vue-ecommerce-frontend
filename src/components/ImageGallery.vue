@@ -3,7 +3,7 @@
     <div class="displayed-image">
       <img
         :src="selected.src"
-        alt="yoyo"
+        alt="No image"
         crossorigin="anonymous"
         @click="emits('openFSGallery')"
       >
@@ -52,7 +52,7 @@ import {computed, ref} from 'vue';
 import {config} from "../../application.config.js";
 import Button from "primevue/button";
 
-const { uploadsUrl } = config;
+const { uploadsUrl, noImageUrl } = config;
 const emits = defineEmits(['closeGallery'])
 
 const props = defineProps({
@@ -74,8 +74,8 @@ const props = defineProps({
 const selectedIndex = ref(props.startIndex);
 
 const selected = computed(() => {
-  if (!props.source) return {src: `${uploadsUrl}/no-photo.jpeg`};
-  return props.source[selectedIndex.value] || props.source[0];
+  if (!props.source) return {src: `${noImageUrl}`};
+  return props.source[selectedIndex.value] || props.source[0] || noImageUrl;
 })
 
 const classes = computed(() => {

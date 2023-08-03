@@ -99,7 +99,7 @@
           <template #body="slotProps">
             <img
               crossorigin="anonymous"
-              :src="getImageUrl(slotProps.data.images)"
+              :src="getImageUrl(slotProps.data.imageUrls)"
               alt="no image"
               class="product-image"
             >
@@ -265,9 +265,9 @@ import Dropdown from "primevue/dropdown";
 import AddUpdateProduct from "../../components/Admin/AddUpdateProduct.vue";
 
 import axios from "axios";
-import {setAdminPageTitle} from "../../utils/helpers.js";
+import {setAdminPageTitle, getImageUrl as getImageUrlHelper} from "../../utils/helpers";
 
-const {uploadsUrl} = config;
+const {uploadsUrl, noImageUrl} = config;
 
 // toasts
 const toast = useToast();
@@ -350,14 +350,7 @@ const deleteSelectedProducts = () => {
   deleteProductsDialog.value = false;
 }
 
-const getImageUrl = (images) => {
-  if(Array.isArray(images)){
-    if(images.length)
-      return `${uploadsUrl}/${images[0]}`
-    return `${uploadsUrl}/no-photo.jpeg`
-  }
-  return `${uploadsUrl}/${images}`;
-}
+const getImageUrl = (imageUrls) => getImageUrlHelper({imageUrls})[0] || `${noImageUrl}`;
 
 // queries
 const queryParams = ref({
