@@ -85,6 +85,12 @@ const routes = [
     path: '/order/:id',
     name: 'Order',
     component: () => import('../views/Order.vue')
+  },
+  {
+    path: '/:notFound',
+    name: 'NotFound',
+    component: () => import('../components/BlankPage.vue'),
+    props: { statusCode: 404, message: 'Not Found' }
   }
 ];
 

@@ -137,9 +137,7 @@
   <div v-else
        id="no-product"
   >
-    <span>
-      Product could not be found or something went wrong.
-    </span>
+    <BlankPage status-code="404" message="Product could not be found"></BlankPage>
   </div>
 </template>
 <script setup>
@@ -162,6 +160,7 @@ import ImageGallery from "../components/ImageGallery.vue";
 import {getReviewsForProduct} from "../managers/RequestManagers/review.js";
 import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite.js";
 import {getImageUrl, setPageTitle} from "../utils/helpers.js";
+import BlankPage from "../components/BlankPage.vue";
 
 const {uploadsUrl} = config;
 
@@ -308,19 +307,6 @@ const addToCart = () => {
 
 </script>
 <style>
-
-#no-product {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #1877f2;
-  max-width: 50%;
-  margin: auto;
-  text-align: center;
-  display: flex;
-  height: 90vh;
-  align-items: center;
-}
-
 .p-dialog {
   width: 40%;
 }

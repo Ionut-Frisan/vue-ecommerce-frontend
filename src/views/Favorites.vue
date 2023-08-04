@@ -1,5 +1,5 @@
 <template>
-  <div className="product-cards-container">
+  <div :class="{'product-cards-container': !showBlankPage}">
     <TransitionGroup name="list">
       <ProductCard
         v-for="product in products"
@@ -9,6 +9,9 @@
         @toggle-favorite="handleToggleFavorite"
       />
     </TransitionGroup>
+    <div v-if="!products.length">
+        <BlankPage status-code="404" message="You have no favorites at the moment"></BlankPage>
+    </div>
   </div>
 </template>
 
@@ -16,26 +19,32 @@
 // TODO: handle no favorite
 import ProductCard from '../components/ProductCard.vue';
 
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {useAuthStore} from "../stores/auth.js";
 import {getMyFavorites} from "../managers/RequestManagers/favorite.js";
 import {setPageTitle} from "../utils/helpers.js";
+import BlankPage from "../components/BlankPage.vue";
 
 
 const authStore = useAuthStore();
 
 const products = ref([]);
+const isLoading = ref(true);
 
 onMounted(async () => {
     setPageTitle('Favorites');
     const response = await getMyFavorites();
     products.value = response || [];
+    isLoading.value = false;
 })
 
 const handleToggleFavorite = ({id, newValue}) => {
     if (newValue) return;
     products.value = products.value.filter((product) => product._id !== id);
 }
+
+const showBlankPage = computed(() => !products.value.length && !isLoading.value);
+
 
 </script>
 
