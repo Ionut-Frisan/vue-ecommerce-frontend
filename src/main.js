@@ -1,8 +1,10 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
+import "../src/assets/vars.css";
+import "../src/assets/index.css";
 import "../src/assets/product.css";
-import "./style.css";
+
 
 import "primevue/resources/themes/saga-blue/theme.css"; // theme
 import "primevue/resources/primevue.min.css"; // core css

@@ -1,9 +1,9 @@
 <template>
   <div
     v-if="cart.getCartItems.length"
-    class="cart-page-wrapper"
+    class="presentation-page"
   >
-    <h1>Cart</h1>
+    <h1>My shopping cart</h1>
     <div class="cart-content-wrapper">
       <div class="cart-content">
         <div class="cart-products">
@@ -143,10 +143,10 @@ body{
 
 .cart-content-wrapper{
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: 65% 33%;
   width: 100%;
   margin: auto;
-  column-gap: 20px;
+  column-gap: 2%;
 }
 
 .cart-summary, .cart-add-voucher{

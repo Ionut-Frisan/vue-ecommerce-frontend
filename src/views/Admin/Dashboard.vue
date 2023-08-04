@@ -16,6 +16,7 @@ onMounted(() => setAdminPageTitle('Admin'));
 <style scoped>
 .wrapper {
   display: flex;
+  flex-direction: column;
 }
 
 .content {

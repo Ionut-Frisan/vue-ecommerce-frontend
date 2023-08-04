@@ -1,5 +1,5 @@
 <template>
-  <div class="order-wrapper">
+  <div class="presentation-page">
       <h2 class="order-title">Order {{order._id}}</h2>
       <div class="order-header">
           <span>Placed on:</span>

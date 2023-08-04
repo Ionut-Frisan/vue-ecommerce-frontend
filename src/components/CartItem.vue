@@ -94,9 +94,13 @@ const removeFromCart = () => {
 </script>
 
 <style>
+.cart-item:first-of-type{
+    padding-top: 0;
+}
+
 .cart-item {
-  background-color: #e4f1f9;
-  padding: 20px 20px 45px 20px;
+  //background-color: #e4f1f9;
+  margin-bottom: 45px;
   position: relative;
   border-radius: 5px;
 }

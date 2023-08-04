@@ -1,0 +1,18 @@
+.presentation-page {
+    margin: 0 auto;
+    max-width: 95%;
+    width: 100%;
+    padding: 1rem 5rem;
+    background-color: var(--container-bg);
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+    transition: max-width 0.2s linear;
+    min-height: calc(100vh - 60px);
+}
+
+
+@media (max-width: 992px) {
+    .presentation-page {
+        max-width: 100%;
+        padding: 1rem;
+    }
+}

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="productStore.isLoading"
+    v-if="productStore.getLoadStatus"
     id="loader-wrapper"
   >
     <ProgressSpinner

@@ -1,5 +1,5 @@
 <template>
-  <div :class="['product-wrapper', {'no-scroll': isGalleryFS}]" v-if="shouldRender">
+  <div :class="['presentation-page', {'no-scroll': isGalleryFS}]" v-if="shouldRender">
     <div class="product-hero">
       <ImageGallery
           :source="imagesUrls"
@@ -325,10 +325,6 @@ const addToCart = () => {
   display: block;
 }
 
-.product-wrapper {
-  width: 80%;
-  margin: 5% auto 0 auto;
-}
 
 .product-hero {
   display: flex;
@@ -385,9 +381,6 @@ const addToCart = () => {
   padding-top: 10px;
 }
 
-.product-info-panels > *:last-child {
-  padding-bottom: 200px;
-}
 
 @media (max-width: 1380px) {
   .product-action-buttons {
@@ -407,9 +400,6 @@ const addToCart = () => {
 }
 
 @media (max-width: 600px) {
-  .product-wrapper {
-    width: 95%;
-  }
 
   .product-hero {
     flex-direction: column;

@@ -1,5 +1,5 @@
 <template>
-  <div class="orders-wrapper">
+  <div class="presentation-page">
     <h2>My orders</h2>
     <Order
       v-for="(order, index) in orders"
