@@ -9,7 +9,7 @@
         @toggle-favorite="handleToggleFavorite"
       />
     </TransitionGroup>
-    <div v-if="!products.length">
+    <div v-if="showBlankPage">
         <BlankPage status-code="404" message="You have no favorites at the moment"></BlankPage>
     </div>
   </div>
