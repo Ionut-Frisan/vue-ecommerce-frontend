@@ -1,5 +1,8 @@
 <template>
-  <nav class="navbar">
+  <nav
+    class="navbar"
+    @blur="toggleMobile"
+  >
     <p class="navbar-branding">
       <router-link to="/">
         Whynot
@@ -62,7 +65,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, ref, onMounted, onBeforeUnmount } from "vue";
 import { useAuthStore } from "../stores/auth.js";
 
 import InputText from "primevue/inputtext";
@@ -77,6 +80,7 @@ const auth = useAuthStore();
 const cart = useCartStore();
 const productsStore = useProductStore();
 
+let onClickOutsideEvent;
 
 let showMobile = ref(false);
 
@@ -143,6 +147,19 @@ const onSearch = (e) => {
   }
   searchQuery.value = "";
 };
+
+onMounted(() => {
+    onClickOutsideEvent = window.addEventListener('click', (event) => {
+        if(!event.target.closest('.navbar')) {
+            showMobile.value = false;
+        }
+    });
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener(onClickOutsideEvent);
+})
+
 </script>
 
 <style>
