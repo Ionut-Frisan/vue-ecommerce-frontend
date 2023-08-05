@@ -1,8 +1,5 @@
 <template>
-  <nav
-    class="navbar"
-    @blur="toggleMobile"
-  >
+  <nav class="navbar">
     <p class="navbar-branding">
       <router-link to="/">
         Whynot
