@@ -119,7 +119,7 @@
       />
       <span class="divider" />
       <RouterLink
-        to="/reset-password"
+        to="/login"
         class="forgot-password"
       >
         Already have an account? Log in
@@ -136,7 +136,6 @@ import {useToast} from "primevue/usetoast";
 import axios from "axios";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
-import Message from 'primevue/message';
 
 import validateObject from '../validations/GenericValidations.js';
 import {setPageTitle} from "../utils/helpers.js";
@@ -362,6 +361,39 @@ const onSubmit = async () => {
 
 .pb-10 {
   margin-bottom: 10px;
+}
+
+@media (max-width: 992px) {
+    .wrapper {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .input-credentials:not(.name .input-credentials), .name, .p-input-icon-right{
+        width: 100% !important;
+    }
+}
+@media (max-width: 600px) {
+    .form-content {
+        padding: 20px;
+        width: fit-content;
+    }
+
+    .name{
+        flex-direction: column;
+    }
+
+    .single-line-inputs{
+        width: 100% !important;
+    }
+
+    .input-credentials{
+        min-width: 70vw !important;
+    }
+
+    .text-content{
+        text-align: center;
+    }
 }
 
 </style>

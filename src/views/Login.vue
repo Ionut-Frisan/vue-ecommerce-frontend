@@ -127,6 +127,7 @@ const login = async () => {
   top: calc(50% + 30px);
   left: 50%;
   transform: translate(-50%, -50%);
+    width: 100%;
 }
 
 .text-content {
@@ -171,5 +172,38 @@ const login = async () => {
   margin: auto;
   border-top: 1px solid #b4b8c0;
   padding-bottom: 10px;
+}
+
+@media (max-width: 992px) {
+    .wrapper {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .input-credentials:not(.name .input-credentials), .name, .p-input-icon-right{
+        width: 100% !important;
+    }
+}
+@media (max-width: 600px) {
+    .form-content {
+        padding: 20px;
+        width: fit-content;
+    }
+
+    .name{
+        flex-direction: column;
+    }
+
+    .single-line-inputs{
+        width: 100% !important;
+    }
+
+    .input-credentials{
+        min-width: 70vw !important;
+    }
+
+    .text-content{
+        text-align: center;
+    }
 }
 </style>
