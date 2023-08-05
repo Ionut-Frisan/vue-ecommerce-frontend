@@ -1,4 +1,5 @@
 export const statusLabels = {
+    "orderPlaced": "Order placed",
     "waitingForPayment": "Waiting for payment",
     "paymentCompleted": "Payment completed",
     "orderAccepted": "Order accepted",
@@ -10,6 +11,7 @@ export const statusLabels = {
 }
 
 export const statusIcons = {
+    "orderPlaced": "pi pi-wallet",
     "waitingForPayment": "pi pi-wallet",
     "paymentCompleted": "pi pi-credit-card",
     "orderAccepted": "pi pi-check",
@@ -21,6 +23,7 @@ export const statusIcons = {
 }
 
 export const statusSeverity = {
+    "orderPlaced": "info",
     "waitingForPayment": "info",
     "paymentCompleted": "info",
     "orderAccepted": "info",

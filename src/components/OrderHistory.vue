@@ -1,109 +1,122 @@
 <template>
-  <div class="order-history">
-    <div class="history-item">
-      <v-icon
-        name="md-playlistaddcheck"
-        scale="2"
-      />
-      <span>--</span>
-      <strong>Order received</strong>
-    </div>
-    <div class="history-item">
-      <v-icon
-        name="md-payment"
-        scale="2"
-      />
-      <span> -- </span>
-      <strong>Payment accepted</strong>
-    </div>
-    <div class="history-item">
-      <v-icon
-        name="bi-cart-check"
-        scale="2"
-      />
-      <span>--</span>
-      <strong>Order accepted</strong>
-    </div>
-    <div class="history-item">
-      <v-icon
-        name="ri-loader-fill"
-        scale="2"
-      />
-      <span>--</span>
-      <strong>In progress</strong>
-    </div>
-    <div class="history-item">
-      <v-icon
-        name="ri-car-line"
-        scale="2"
-      />
-      <span>--</span>
-      <strong>Delivering</strong>
-    </div>
-    <div class="history-item">
-      <v-icon
-        name="io-checkmark-done-circle"
-        scale="2"
-      />
-      <span>--</span>
-      <strong>Delivered</strong>
-    </div>
-    <div class="order-timeline" />
+  <div
+    v-if="!!statusComputed"
+    class="order-history"
+  >
+    <timeline
+      :value="items"
+      align="left"
+      style="width: fit-content"
+    >
+      <template #content="slotProps">
+        <span :style="{ color: slotProps.item.color }">
+          {{ slotProps.item.label }}
+        </span>
+      </template>
+      <template #marker="slotProps">
+        <span
+          class="status-icon"
+          :style="{ color: slotProps.item.color }"
+        >
+          <i :class="slotProps.item.icon" />
+        </span>
+      </template>
+    </timeline>
   </div>
 </template>
 
 <script setup>
 // TODO: dynamic
 // TODO: current status
+import {computed} from "vue";
+import Timeline from 'primevue/timeline';
+
+import {statusLabels} from "../utils/constants.js";
+
+const props = defineProps({
+    order: {
+        type: Object
+    }
+})
+
+const notOkStatuses = ['paymentRejected', 'cancelled'];
+const statusList = ['orderPlaced', 'paymentCompleted', 'orderAccepted', 'inProgress', 'delivering', 'completed'];
+
+const statusComputed = computed(() => {
+    const statusMapping = {
+        cancelled: "cancelled",
+        completed: "completed",
+        delivering: "delivering",
+        inProgress: "inProgress",
+        orderAccepted: "orderAccepted",
+        orderPlaced: "orderPlaced",
+        paymentCompleted: "paymentCompleted",
+        paymentRejected: "paymentRejected",
+        waitingForPayment: "orderPlaced"
+    }
+    return statusMapping[props.order.status];
+});
+
+const statusIcons = computed(() => {
+    return statusList.reduce((acc, status) => {
+        const isStatusDone = (statusList.indexOf(status) < statusList.indexOf(statusComputed.value)) || statusComputed.value === 'completed' || status === 'orderPlaced';
+        const icon = ['inProgress', 'delivering'].includes(statusComputed.value) ? "pi pi-spin pi-spinner" :
+            (statusList.indexOf(status) <= statusList.indexOf(statusComputed.value)) ? "pi pi-check" : "pi pi-stop";
+        // const icon = isStatusDone ? "pi pi-check" :
+        //   status === statusComputed.value ? "pi pi-spin pi-spinner" : "pi pi-stop"
+        return {
+            ...acc,
+            [status]: icon
+        }
+    }, {})
+})
+
+const statusColors = computed(() => {
+    return statusList.reduce((acc, status) => {
+        const isStatusDone = (statusList.indexOf(status) < statusList.indexOf(statusComputed.value)) || statusComputed.value === 'completed' || status === 'orderPlaced';
+        // const color = isStatusDone ? "#4caf50" :
+        //     status === statusComputed.value ? "#2196f3" : "";
+        const color = ['inProgress', 'delivering'].includes(statusComputed.value) ? "#2196f3" :
+            (statusList.indexOf(status) <= statusList.indexOf(statusComputed.value)) ? "#4caf50" : "#dee2e6";
+        return {
+            ...acc,
+            [status]: color
+        }
+    }, {})
+})
+
+const items = computed(() => {
+    if(notOkStatuses.includes(statusComputed.value)) {
+        return [{
+            label: statusLabels[statusComputed.value],
+            icon: "pi pi-times",
+            color: "#ff4032"
+        }]
+    }
+    return statusList.map((status) => ({
+        label: statusLabels[status],
+        icon: statusIcons.value[status],
+        color: statusColors.value[status]
+    }))
+})
+
 </script>
 
-<style scoped>
-.order-history{
-    width: 100%;
+<style>
+.status-icon {
+    border-radius: 50%;
+    border: 1px solid;
+    width: 2rem;
+    height: 2rem;
     display: flex;
-    justify-content: space-between;
-    color: #0ea5e9;
-    position: relative;
-    text-align: center;
-    justify-items: center;
+    align-items: center;
+    justify-content: center;
 }
 
-.history-item svg{
-    margin-bottom: 20px;
-    font-size: 2rem !important;
-}
-
-.history-item{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.history-item:not(.history-item:first-of-type) svg{
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.history-item:first-of-type{
-    text-align: start;
-}
-
-.history-item:has(+ .order-timeline) svg{
-    margin-left: auto !important;
-    margin-right: 0 !important;
-}
-
-.history-item:has(+ .order-timeline){
-    text-align: end;
-}
-
-.order-timeline{
-    width: 100%;
-    height: 10px;
-    background-color: #0ea5e9;
-    display: inline-block;
-    position: absolute;
-    top: 44px;
+.p-timeline-event-opposite{
+    width: 0;
+    flex: 0;
+    padding: 0;
 }
 
 </style>

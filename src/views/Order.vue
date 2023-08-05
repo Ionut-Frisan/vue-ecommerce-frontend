@@ -112,15 +112,6 @@ const phoneNumber = computed(() => {
 
 <style scoped>
 
-.order-wrapper{
-    margin: 20px 10%;
-    width: 80%;
-    background-color: #e4f1f9;
-    padding: 1px 20px;
-    box-shadow: 1px 1px 2px #bbc6cc;
-    border-radius: 5px;
-}
-
 .order-header span:nth-of-type(odd){
     width: 100px;
     display: inline-block;
