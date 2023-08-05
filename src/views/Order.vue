@@ -122,7 +122,7 @@ const phoneNumber = computed(() => {
     color: #070606C4;
 }
 
-.order-header, .order-info-wrapper{
+.order-header, .order-info-wrapper, .history-wrapper{
     padding: 10px;
     background-color: #fff;
     border-radius: 5px;
@@ -133,10 +133,10 @@ const phoneNumber = computed(() => {
     display: grid;
     grid-template-columns: 1fr 1fr;
     row-gap: 5px;
-    margin-bottom: 20px;
 }
 
 .history-wrapper{
-    margin: 20px 0;
+    padding: 20px 0;
+    margin: 10px 0;
 }
 </style>
