@@ -25,4 +25,10 @@ onMounted(() => setAdminPageTitle('Admin'));
   background-color: #fff;
   min-height: calc(100vh - 60px);
 }
+
+@media (max-width: 992px) {
+    .content {
+        padding: 0 !important;
+    }
+}
 </style>
