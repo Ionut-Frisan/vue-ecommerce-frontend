@@ -78,12 +78,12 @@ const sortableColumns = [
     label: 'Discount'
   },
   {
-    value: 'date_added',
+    value: '-date_added',
     label: 'Newest',
     showDirection: false,
   },
   {
-    value: '-date_added',
+    value: 'date_added',
     label: 'Oldest',
     showDirection: false,
   },
