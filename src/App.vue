@@ -3,13 +3,13 @@ import Navbar from "./components/Navbar.vue";
 import Toast from "primevue/toast";
 import Loader from '../src/components/Loader.vue';
 
-import {useAuthStore} from "./stores/auth.js";
-import {useCartStore} from "./stores/cart.js";
-import {useProductStore} from "./stores/product.js";
+import {useAuthStore} from "./stores/auth";
+import {useCartStore} from "./stores/cart";
+import {useProductStore} from "./stores/product";
 import {onBeforeMount, onMounted} from "vue";
 import axios from "axios";
-import {getMyFavorites} from "./managers/RequestManagers/favorite.js";
-import {checkToken} from "./managers/RequestManagers/auth.js";
+import {getMyFavorites} from "./managers/RequestManagers/favorite";
+import {checkToken} from "./managers/RequestManagers/auth";
 
 const auth = useAuthStore();
 const cart = useCartStore();

@@ -63,14 +63,14 @@
 
 <script setup>
 import { computed, ref, onMounted, onBeforeUnmount } from "vue";
-import { useAuthStore } from "../stores/auth.js";
+import { useAuthStore } from "../stores/auth";
 
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import SplitButton from "primevue/splitbutton";
-import { useCartStore } from "../stores/cart.js";
-import router from "../router/index.js";
-import { useProductStore } from "../stores/product.js";
+import { useCartStore } from "../stores/cart";
+import router from "../router/index";
+import { useProductStore } from "../stores/product";
 
 
 const auth = useAuthStore();

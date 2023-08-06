@@ -33,9 +33,9 @@ import {useRoute, useRouter} from 'vue-router';
 
 import Paginator from 'primevue/paginator';
 import {useToast} from "primevue/usetoast";
-import {useProductStore} from "../stores/product.js";
-import {useAuthStore} from "../stores/auth.js";
-import {setPageTitle} from "../utils/helpers.js";
+import {useProductStore} from "../stores/product";
+import {useAuthStore} from "../stores/auth";
+import {setPageTitle} from "../utils/helpers";
 import AdvancedFilters from "../components/AdvancedFilters.vue";
 
 

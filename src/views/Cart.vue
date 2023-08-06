@@ -80,12 +80,12 @@
 
 <script setup>
 import {computed, ref, onBeforeMount} from 'vue';
-import {useCartStore} from "../stores/cart.js";
+import {useCartStore} from "../stores/cart";
 import CartItem from "../components/CartItem.vue";
 import {getFormattedPrice} from '../utils/price.js'
 import Button from "primevue/button";
 import axios from "axios";
-import {setPageTitle} from "../utils/helpers.js";
+import {setPageTitle} from "../utils/helpers";
 
 onBeforeMount(async () => {
   await getCartPriceBackend();

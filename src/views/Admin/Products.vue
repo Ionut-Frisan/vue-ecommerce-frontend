@@ -251,7 +251,7 @@
 <script setup>
 import {ref, onMounted, computed, watch} from "vue";
 import { useToast } from "primevue/usetoast";
-import {config} from "../../../application.config.js";
+import {config} from "../../../application.config";
 
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";

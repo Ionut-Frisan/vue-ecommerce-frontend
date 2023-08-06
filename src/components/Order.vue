@@ -24,8 +24,8 @@ import {computed} from "vue";
 
 import Button from "primevue/button";
 import {useToast} from "primevue/usetoast";
-import {isValidDate} from "../utils/helpers.js";
-import {statusLabels} from "../utils/constants.js";
+import {isValidDate} from "../utils/helpers";
+import {statusLabels} from "../utils/constants";
 
 const toast = useToast();
 

@@ -49,7 +49,7 @@
 </template>
 <script setup>
 import {computed, ref} from 'vue';
-import {config} from "../../application.config.js";
+import {config} from "../../application.config";
 import Button from "primevue/button";
 
 const { uploadsUrl, noImageUrl } = config;
