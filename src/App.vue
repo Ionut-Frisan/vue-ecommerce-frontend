@@ -31,25 +31,31 @@ onMounted(async () => {
     const favorites = await getMyFavorites();
     product.favoritesCount = favorites.length;
   }
+  await product.fetchCategories();
 })
 
 axios.interceptors.request.use((config) => {
   product.isLoading = true;
-  product.addLoader(config.baseURL);
+  product.addLoader(config.url);
   return config;
+}, (error) => {
+  product.isLoading = true;
+  product.clearLoader(error.config.url);
+  return Promise.reject(error);
 })
 axios.interceptors.response.use((response) => {
   product.isLoading = false;
-  product.clearLoader(response.config.baseURL);
+  product.clearLoader(response.config.url);
   return response;
 }, (error) => {
-  product.clearLoader(error.response.config.baseURL);
+  product.clearLoader(error.config.url);
   product.isLoading = false;
   if (error.response && error.response.data) {
     return Promise.reject(error.response.data);
   }
   return Promise.reject(error.message);
 })
+
 </script>
 
 <template>

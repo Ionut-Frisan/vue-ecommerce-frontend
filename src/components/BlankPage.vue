@@ -1,6 +1,6 @@
 <template>
   <div class="blank-page">
-      <h2>{{messageComputed}}</h2>
+    <h2>{{ messageComputed }}</h2>
   </div>
 </template>
 

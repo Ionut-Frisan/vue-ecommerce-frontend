@@ -1,7 +1,7 @@
 <template>
   <div :class="classes">
-    <span>{{labelComputed}} &nbsp</span>
-    <span>{{valueComputed}}</span>
+    <span>{{ labelComputed }} &nbsp</span>
+    <span>{{ valueComputed }}</span>
   </div>
 </template>
 <script setup>
@@ -10,10 +10,10 @@ import {computed} from "vue";
 const props = defineProps({
     value: {
         type: String,
-        default: "--",
+        default: "--"
     },
     label: String,
-    labelPosition: String,
+    labelPosition: String
 })
 
 const noValueIndicator = '--';

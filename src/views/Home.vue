@@ -3,6 +3,11 @@
     Showing results for: <strong>{{ searchQuery }}</strong>
   </span>
   <div class="product-cards-container">
+    <advanced-filters
+        :sortable-columns="sortableColumns"
+        filtersId="products"
+        @changed="getProductsWithQuery"
+    />
     <TransitionGroup name="list">
       <ProductCard
           v-for="product in productsStore.getProducts"
@@ -31,6 +36,7 @@ import {useToast} from "primevue/usetoast";
 import {useProductStore} from "../stores/product.js";
 import {useAuthStore} from "../stores/auth.js";
 import {setPageTitle} from "../utils/helpers.js";
+import AdvancedFilters from "../components/AdvancedFilters.vue";
 
 
 const route = useRoute();
@@ -55,6 +61,41 @@ onMounted(() => {
   getProductsWithQuery();
   setPageTitle('Home');
 })
+
+const sortableColumns = [
+  {
+    value: 'name',
+    label: 'A-Z',
+    showDirection: false,
+  },
+  {
+    value: '-name',
+    label: 'Z-A',
+    showDirection: false,
+  },
+  {
+    value: '-discount',
+    label: 'Discount'
+  },
+  {
+    value: 'date_added',
+    label: 'Newest',
+    showDirection: false,
+  },
+  {
+    value: '-date_added',
+    label: 'Oldest',
+    showDirection: false,
+  },
+  {
+    value: 'price',
+    label: 'Price'
+  },
+  {
+    value: '-price',
+    label: 'Price'
+  },
+]
 
 watch(() => route.fullPath, (newValue, oldValue) => {
   if (!['Search', 'Home'].includes(route.name)) return;
@@ -92,6 +133,11 @@ const getProductsWithQuery = async () => {
   grid-template-columns: repeat(5, minmax(200px, auto));
   grid-gap: clamp(10px, 3vw, 20px);
   justify-content: center;
+}
+
+/* TODO: better way to do this */
+.advanced-filters + .card{
+  grid-column: 1;
 }
 
 @media (max-width: 600px) {

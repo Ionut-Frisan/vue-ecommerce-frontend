@@ -10,7 +10,10 @@
       />
     </TransitionGroup>
     <div v-if="showBlankPage">
-        <BlankPage status-code="404" message="You have no favorites at the moment"></BlankPage>
+      <BlankPage
+        status-code="404"
+        message="You have no favorites at the moment"
+      />
     </div>
   </div>
 </template>
