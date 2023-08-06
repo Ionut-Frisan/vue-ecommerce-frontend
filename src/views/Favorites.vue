@@ -23,9 +23,9 @@
 import ProductCard from '../components/ProductCard.vue';
 
 import {computed, onMounted, ref} from "vue";
-import {useAuthStore} from "../stores/auth.js";
-import {getMyFavorites} from "../managers/RequestManagers/favorite.js";
-import {setPageTitle} from "../utils/helpers.js";
+import {useAuthStore} from "../stores/auth";
+import {getMyFavorites} from "../managers/RequestManagers/favorite";
+import {setPageTitle} from "../utils/helpers";
 import BlankPage from "../components/BlankPage.vue";
 
 

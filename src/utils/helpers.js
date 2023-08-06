@@ -1,4 +1,4 @@
-import { config } from "../../application.config.js";
+import { config } from "../../application.config";
 
 const { uploadsUrl } = config;
 
@@ -15,7 +15,7 @@ export const setPageTitle = (title) => {
 }
 
 /**
- * @desc  Sets page title to Admin | {title}
+ * @desc  Sets page title to Admin | {@param title}
  * @param {String} title
  */
 export const setAdminPageTitle = (title) => {

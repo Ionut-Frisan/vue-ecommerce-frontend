@@ -143,10 +143,10 @@
 <script setup>
 import {computed, onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
-import {useProductStore} from "../stores/product.js";
-import {useAuthStore} from "../stores/auth.js";
-import {useCartStore} from "../stores/cart.js";
-import {config} from "../../application.config.js";
+import {useProductStore} from "../stores/product";
+import {useAuthStore} from "../stores/auth";
+import {useCartStore} from "../stores/cart";
+import {config} from "../../application.config";
 import Button from "primevue/button";
 import Rating from "primevue/rating";
 import Panel from "primevue/panel";
@@ -157,9 +157,9 @@ import axios from "axios";
 import Divider from 'primevue/divider';
 import ImageGallery from "../components/ImageGallery.vue";
 
-import {getReviewsForProduct} from "../managers/RequestManagers/review.js";
-import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite.js";
-import {getImageUrl, setPageTitle} from "../utils/helpers.js";
+import {getReviewsForProduct} from "../managers/RequestManagers/review";
+import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite";
+import {getImageUrl, setPageTitle} from "../utils/helpers";
 import BlankPage from "../components/BlankPage.vue";
 
 const {uploadsUrl} = config;

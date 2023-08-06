@@ -25,9 +25,9 @@ import { createPinia } from 'pinia';
 import router from "./router/index";
 import axios from "axios";
 
-import {importIcons} from "./utils/icon-imports.js";
+import {importIcons} from "./utils/icon-imports";
 
-import {config} from "../application.config.js";
+import {config} from "../application.config";
 
 importIcons();
 

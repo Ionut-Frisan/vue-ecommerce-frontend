@@ -89,9 +89,9 @@ import Dialog from "primevue/dialog";
 import Dropdown from "primevue/dropdown";
 import Button from "primevue/button";
 
-import {getOrderById, updateOrderStatus} from "../../../managers/RequestManagers/orders.js";
-import {statusIcons, statusLabels, statusSeverity} from "../../../utils/constants.js";
-import {setAdminPageTitle} from "../../../utils/helpers.js";
+import {getOrderById, updateOrderStatus} from "../../../managers/RequestManagers/orders";
+import {statusIcons, statusLabels, statusSeverity} from "../../../utils/constants";
+import {setAdminPageTitle} from "../../../utils/helpers";
 
 const route = useRoute();
 const order = ref({});

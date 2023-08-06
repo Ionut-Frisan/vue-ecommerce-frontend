@@ -119,9 +119,9 @@ import {onMounted, ref, computed} from "vue"
 import Column from "primevue/column";
 import Tag from "primevue/tag";
 import DataTable from "primevue/datatable";
-import {getOrders} from "../../../managers/RequestManagers/orders.js";
-import {statusLabels, statusIcons, statusSeverity} from "../../../utils/constants.js";
-import {setAdminPageTitle} from "../../../utils/helpers.js";
+import {getOrders} from "../../../managers/RequestManagers/orders";
+import {statusLabels, statusIcons, statusSeverity} from "../../../utils/constants";
+import {setAdminPageTitle} from "../../../utils/helpers";
 
 const orders = ref([]);
 const selectedOrders = ref([]);

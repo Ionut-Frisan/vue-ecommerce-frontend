@@ -8,7 +8,7 @@
 <script setup>
 import Sidebar from "../../components/Admin/Sidebar.vue";
 import {onMounted} from "vue";
-import {setAdminPageTitle} from "../../utils/helpers.js";
+import {setAdminPageTitle} from "../../utils/helpers";
 
 onMounted(() => setAdminPageTitle('Admin'));
 </script>

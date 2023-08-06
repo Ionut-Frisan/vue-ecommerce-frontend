@@ -3,11 +3,11 @@
 </template>
 
 <script setup>
-import {useProductStore} from "../stores/product.js";
+import {useProductStore} from "../stores/product";
 import {computed, ref} from "vue";
-import {useCartStore} from "../stores/cart.js";
+import {useCartStore} from "../stores/cart";
 import {useToast} from "primevue/usetoast";
-import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite.js";
+import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite";
 
 const props = defineProps({
     product: {
