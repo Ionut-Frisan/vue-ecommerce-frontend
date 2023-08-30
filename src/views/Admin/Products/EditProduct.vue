@@ -13,7 +13,10 @@
       <p v-for="err in errors?.name" v-if="submitted" class="p-error error-helper">{{ err }}</p>
     </div>
     <div class="field">
-      <label for="description">Description</label>
+      <label for="description">
+        Description
+        <Button @click="toggleOverlay" text icon="pi pi-eye"></Button>
+      </label>
       <Textarea
           id="description"
           v-model="product.description"
@@ -132,6 +135,9 @@
           @click="submit"
       />
     </div>
+    <OverlayPanel ref="overlay">
+      <p v-html="markdownToHtml(product.description)"></p>
+    </OverlayPanel>
   </div>
 </template>
 
@@ -148,13 +154,17 @@ import Textarea from "primevue/textarea";
 import Dropdown from "primevue/dropdown";
 import ToggleButton from 'primevue/togglebutton';
 import Button from 'primevue/button';
+import OverlayPanel from "primevue/overlaypanel";
 import JsonEditorVue from 'json-editor-vue'
 
+import { markdownToHtml } from "../../../utils/markdown.js";
 import validateObject from '../../../validations/GenericValidations.js';
 
 const route = useRoute();
 const router = useRouter();
 const productStore = useProductStore();
+
+const overlay = ref();
 
 const pageTitle = ref('Edit product');
 const product = ref({
@@ -166,6 +176,11 @@ const product = ref({
   description: '',
   specification: {},
 });
+
+const toggleOverlay = (event) => {
+  overlay.value.toggle(event);
+}
+
 onMounted(async () => {
   await getCategories();
   product.value = await productStore.fetchSingleProduct(route.params.slug);

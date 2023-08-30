@@ -45,7 +45,7 @@
     </div>
     <div class="product-info-panels">
       <Panel header="Description">
-        <p> {{ product.description || '-' }}</p>
+        <p v-html="markdownToHtml(product.description || '-')"></p>
       </Panel>
       <Panel header="Specifications">
         <div class="product-specifications" v-if="product.specifications">
@@ -161,6 +161,7 @@ import {getReviewsForProduct} from "../managers/RequestManagers/review.js";
 import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite.js";
 import {getImageUrl, setPageTitle} from "../utils/helpers.js";
 import BlankPage from "../components/BlankPage.vue";
+import { markdownToHtml } from "../utils/markdown.js";
 
 const {uploadsUrl} = config;
 

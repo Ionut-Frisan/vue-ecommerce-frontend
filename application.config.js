@@ -3,7 +3,7 @@ import NoPhoto from './src/assets/no-photo.jpeg';
 
 const backendUrl = import.meta.env.PROD
         ? 'https://urchin-app-xyh7n.ondigitalocean.app'
-        : 'http://localhost:5000';
+        : 'http://localhost:5001';
 
 const restApiVersion = 'v1';
 const restApiPath = `api/${restApiVersion}`;
