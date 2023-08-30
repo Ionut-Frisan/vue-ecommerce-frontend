@@ -3,12 +3,13 @@
     <div class="card">
       <Toolbar class="mb-4">
         <template #start>
-          <Button
-            label="New"
-            icon="pi pi-plus"
-            class="p-button-success mr-2"
-            @click="openNew('add', null)"
-          />
+          <router-link :to="`products/create`">
+            <Button
+              label="New"
+              icon="pi pi-plus"
+              class="p-button-success mr-2"
+            />
+          </router-link>
           <Button
             label="Delete"
             icon="pi pi-trash"
@@ -26,12 +27,13 @@
             label="Import"
             choose-label="Import"
             class="mr-2 inline-block"
+            disabled
           />
           <Button
             label="Export"
             icon="pi pi-upload"
             class="p-button-help"
-            @click="exportCSV($event)"
+            disabled
           />
         </template>
       </Toolbar>
@@ -147,11 +149,12 @@
           style="min-width: 8rem"
         >
           <template #body="slotProps">
-            <Button
-              icon="pi pi-pencil"
-              class="p-button-rounded p-button-success mr-2"
-              @click="openNew('edit', slotProps.data)"
-            />
+            <router-link :to="`products/update/${slotProps.data.slug}`">
+              <Button
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-success mr-2"
+              />
+            </router-link>
             <Button
               icon="pi pi-trash"
               class="p-button-rounded p-button-warning"
@@ -169,24 +172,6 @@
         </template>
       </DataTable>
     </div>
-
-    <Dialog
-      v-model:visible="productDialog"
-      :style="{ 'min-width': '400px', width: '50%' }"
-      header="Product Details"
-      :modal="true"
-      class="p-fluid"
-      :closable="false"
-      :maximizable="true"
-    >
-      <add-update-product
-        :functionality="dialogFunctionality"
-        :product="productToEdit"
-        @cancel="hideDialog"
-        @saved="addProduct"
-        @edited="updateProduct"
-      />
-    </Dialog>
 
     <Dialog
       v-model:visible="deleteProductDialog"
@@ -262,8 +247,6 @@ import Rating from "primevue/rating";
 import Column from "primevue/column";
 import Dropdown from "primevue/dropdown";
 
-import AddUpdateProduct from "../../components/Admin/AddUpdateProduct.vue";
-
 import axios from "axios";
 import {setAdminPageTitle, getImageUrl as getImageUrlHelper} from "../../utils/helpers";
 
@@ -288,18 +271,9 @@ onMounted(async () => {
 // products functionality
 const products = ref();
 const productToDelete = ref(null);
-const productToEdit = ref(null);
 const selectedProducts = ref([]);
 const deleteProductDialog = ref(false)
 const deleteProductsDialog = ref(false);
-const productDialog = ref(false);
-const dialogFunctionality = ref('add');
-
-const openNew = (newFunctionality, product) => {
-  productToEdit.value = product;
-  dialogFunctionality.value = newFunctionality;
-  productDialog.value = true;
-};
 
 const confirmDeleteProduct = (product) => {
   deleteProductDialog.value = true;
@@ -308,26 +282,6 @@ const confirmDeleteProduct = (product) => {
 
 const confirmDeleteSelected = () => {
   deleteProductsDialog.value = true;
-}
-
-const hideDialog = () => {
-  productDialog.value = false;
-};
-
-const addProduct = (product) => {
-  products.value.push(product);
-  hideDialog();
-};
-
-const updateProduct = (product) => {
-  for(let index = 0; index < products.value.length; index ++){
-    if(products.value[index]._id === product._id)
-    {
-      products.value[index] = product;
-      break
-    }
-  }
-  hideDialog();
 }
 
 const deleteProduct = (id) => {

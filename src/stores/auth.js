@@ -33,6 +33,8 @@ export const useAuthStore = defineStore('auth', {
       this.authenticated = false;
       this.authToken = undefined;
       axios.defaults.headers.common['Authorization'] = '';
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
     },
     setUserRole(user){
       this.userRole = user.role;
@@ -41,7 +43,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async logOut(){
       this.removeAuthToken();
-      this.userRole = 'visitor';
+      this.userRole = 'guest';
     },
     initFromLocal(){
       if(localStorage.getItem('token')){

@@ -25,6 +25,14 @@ const routes = [
         component: () => import("../views/Admin/Products.vue"),
       },
       {
+        path: "products/update/:slug",
+        component: () => import("../views/Admin/Products/EditProduct.vue"),
+      },
+      {
+        path: "products/create",
+        component: () => import("../views/Admin/Products/AddProduct.vue"),
+      },
+      {
         path: "categories",
         component: () => import("../views/Admin/Categories.vue"),
       },
