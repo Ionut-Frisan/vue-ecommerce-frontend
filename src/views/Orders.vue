@@ -10,11 +10,11 @@
 </template>
 <script setup>
 
-import {useAuthStore} from "../stores/auth.js";
+import {useAuthStore} from "../stores/auth";
 import {ref, onMounted} from "vue";
 import axios from "axios";
 import Order from "../components/Order.vue";
-import {setPageTitle} from "../utils/helpers.js";
+import {setPageTitle} from "../utils/helpers";
 
 const authStore = useAuthStore();
 

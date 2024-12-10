@@ -36,7 +36,7 @@ import axios from "axios";
 import NsfTable from "../../components/Admin/NsfTable.vue";
 import Button from 'primevue/button';
 
-import {setAdminPageTitle} from "../../utils/helpers.js";
+import {setAdminPageTitle} from "../../utils/helpers";
 
 const categories = ref([]);
 const selectedCategories = ref([]);

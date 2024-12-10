@@ -100,7 +100,7 @@ import Button from 'primevue/button';
 import axios from "axios";
 import {useToast} from "primevue/usetoast";
 import {useCartStore} from "../../stores/cart";
-import {setPageTitle} from "../../utils/helpers.js";
+import {setPageTitle} from "../../utils/helpers";
 
 const toast = useToast();
 const store = useCartStore()

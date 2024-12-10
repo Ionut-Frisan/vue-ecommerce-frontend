@@ -53,9 +53,9 @@ import {ref, computed, onMounted} from "vue";
 import axios from "axios";
 
 import OrderHistory from "../components/OrderHistory.vue";
-import {isValidDate, setPageTitle} from "../utils/helpers.js";
+import {isValidDate, setPageTitle} from "../utils/helpers";
 
-import {statusLabels} from "../utils/constants.js";
+import {statusLabels} from "../utils/constants";
 
 const route = useRoute();
 const order = ref({});

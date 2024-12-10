@@ -44,7 +44,7 @@
 </template>
 <script setup>
 import {computed, defineProps, ref} from "vue";
-import {config} from "../../application.config.js";
+import {config} from "../../application.config";
 
 const {uploadsUrl} = config;
 

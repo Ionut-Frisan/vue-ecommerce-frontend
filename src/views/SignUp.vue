@@ -129,7 +129,7 @@
 </template>
 
 <script setup>
-import {useAuthStore} from "../stores/auth.js";
+import {useAuthStore} from "../stores/auth";
 import {ref, computed, onMounted} from "vue";
 import {useRouter} from 'vue-router';
 import {useToast} from "primevue/usetoast";
@@ -138,7 +138,7 @@ import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 
 import validateObject from '../validations/GenericValidations.js';
-import {setPageTitle} from "../utils/helpers.js";
+import {setPageTitle} from "../utils/helpers";
 
 const auth = useAuthStore();
 const router = useRouter();

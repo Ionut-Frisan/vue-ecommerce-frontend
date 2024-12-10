@@ -31,7 +31,7 @@
 import {computed} from "vue";
 import Timeline from 'primevue/timeline';
 
-import {statusLabels} from "../utils/constants.js";
+import {statusLabels} from "../utils/constants";
 
 const props = defineProps({
     order: {

@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue';
-import {config} from "../../application.config.js";
-import {getImageUrl as getImageUrlFromProduct } from "../utils/helpers.js";
+import {config} from "../../application.config";
+import {getImageUrl as getImageUrlFromProduct } from "../utils/helpers";
 
 export function useProduct(product) {
   const {uploadsUrl} = config;

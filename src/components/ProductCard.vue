@@ -43,17 +43,17 @@
 
 <script setup>
 import {ref, defineProps, defineEmits, computed} from "vue";
-import {config} from "../../application.config.js";
+import {config} from "../../application.config";
 
 import Rating from "primevue/rating";
 import Button from "primevue/button";
 
 import {useToast} from "primevue/usetoast";
 
-import {useCartStore} from "../stores/cart.js";
-import {useProductStore} from "../stores/product.js";
-import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite.js";
-import {getImageUrl} from "../utils/helpers.js";
+import {useCartStore} from "../stores/cart";
+import {useProductStore} from "../stores/product";
+import {addToFavorite, removeFromFavorites} from "../managers/RequestManagers/favorite";
+import {getImageUrl} from "../utils/helpers";
 
 const { uploadsUrl } = config;
 
